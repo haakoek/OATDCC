@@ -52,13 +52,11 @@ for i in range(1, max_iters):
     C = expm(kappa)
     C_tilde = expm(-kappa)
 
-    h = system.transform_one_body_elements(
-        system.h, C, C_tilde
+    h = np.einsum("pa,ab,bq->pq", C_tilde, h, C, optimize=True)
+    u = np.einsum(
+        "pa,qb,abcd,cr,ds->pqrs", C_tilde, C_tilde, u, C, C, optimize=True
     )
-    u = system.transform_two_body_elements(
-        system.u, C, C_tilde
-    )
-    f = system.construct_fock_matrix(h, u)
+    f = h + np.einsum("piqi->pq", u[:, o, :, o])
 
     d_t_1 = construct_d_t_1_matrix(f, o, v)
     d_t_2 = construct_d_t_2_matrix(f, o, v)
@@ -80,15 +78,16 @@ for i in range(1, max_iters):
     residual_w_ai = np.linalg.norm(w_ai)
     residual_w_ia = np.linalg.norm(w_ia)
 
-    kappa[v, o] -= w_ai / d_t_1
-    kappa[o, v] -= w_ia / d_t_1.T
+    kappa.fill(0)
+    kappa[v, o] = -w_ai / d_t_1
+    kappa[o, v] = -w_ia / d_t_1.T
     ############################################################
     energy = (
         np.einsum("pq,qp->", h, rho_qp, optimize=True)
         + 0.25 * np.einsum("pqrs,rspq->", u, rho_qspr, optimize=True)
         + system.nuclear_repulsion_energy
     )
-    delta_E = energy-e_old
+    delta_E = energy - e_old
     e_old = energy
 
     print(f"** Iteration: {i}")
