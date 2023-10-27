@@ -1,0 +1,219 @@
+\documentclass[aip,jcp,preprint,superscriptaddress,nofootinbib]{revtex4-1}
+\usepackage{silence}
+\WarningFilter{revtex4-1}{Repair the float}
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+\input{preamble/general.tex}
+\input{preamble/local.tex}
+\input{preamble/abbreviations.tex}
+
+
+\newcommand{\au}{Department of Chemistry, Aarhus University, Langelandsgade 140, 8000 Aarhus C, Denmark}
+
+
+\begin{document}
+
+\title{Relating orbital and parameter equations}
+\author{Mads Greisen Højlund}
+\email{madsgh@chem.au.dk}
+\affiliation{\au}
+
+\date{\today}
+\maketitle
+
+\tableofcontents
+\newpage
+
+
+
+\section{Notation} \label{sec:notation}
+
+The Hamiltonian is written using physicist's notation for the integrals (which are not anti-symmetrized):
+\begin{align}
+    H = \sum_{pq} h_{pq} \crea{p} \anni{q} + \tfrac{1}{2} \sum_{pqrs} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+\end{align}
+\begin{align}
+    h_{pq} 
+    = \elm{\phibra{p}}{h}{\phiket{q}} 
+    \equiv \int \phibra{p}(\mathbf{x}) h(\mathbf{x}) \phiket{q}(\mathbf{x}) \dd{\mathbf{x}}
+\end{align}
+\begin{align}
+    u_{pqrs} 
+    = \elm{\phibra{p} \phibra{q}}{u}{\phiket{r} \phiket{s}}
+    \equiv \iint \phibra{p}(\mathbf{x}) \phibra{q}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{r}(\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}}
+\end{align}
+Density matrices are defined as
+\begin{align}
+    \rho_{qp}   &= \elm{\tilde{\Psi}}{ \crea{p} \anni{q} }{\Psi}, \\
+    \rho_{rspq} &= \elm{\tilde{\Psi}}{ \crea{p} \crea{q} \anni{s} \anni{r} }{\Psi}.
+\end{align}
+The two-electron integrals and densities have the following useful permutation symmetries:
+\begin{align}
+    u_{pqrs}    &= u_{qpsr}, \\
+    \rho_{rspq} &= \rho_{srqp}.
+\end{align}
+
+
+\section{Converting orbital equations to parameter equations}
+The orbital equations are formally identical for all orbital-adaptive methods.
+Following Kvaal\cite{kvaalInitioQuantumDynamics2012} and Sato\cite{satoCommunicationTimedependentOptimized2018}, 
+they take the appearance
+\begin{align}
+    i \ket{\phiketdot{p}} 
+    = i \sum_{q} \ket{\phiket{q}} \eta_{qp}
+    + Q \Big[
+    h \ket{\phiket{p}} + \sum_{oqrs} W_{rs} \ket{\phiket{q}} P_{qsor} \, (\mathbf{D}^{-1})_{op}
+    \Big], \label{eq:phiket_dot} \\
+    i \bra{\phibradot{p}} 
+    = -i \sum_{q} \eta_{pq} \bra{\phibra{q}} -
+    \Big[
+    \bra{\phibra{p}} h + \sum_{oqrs} (\mathbf{D}^{-1})_{po} \, P_{osqr}  \bra{\phibra{q}} W_{rs} 
+    \Big] Q. \label{eq:phibra_dot}
+\end{align}
+The mean-field operator\cite{miyagiTimedependentRestrictedactivespaceSelfconsistentfield2013,satoTimedependentCompleteactivespaceSelfconsistentfield2013}
+$W_{rs}$ is a multiplicative/local operator given by
+\begin{align}
+    W_{rs} (\mathbf{x}) = \int \phibra{r} (\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{s} (\mathbf{y}) \dd{\mathbf{y}}.
+\end{align}
+Kvaal\cite{kvaalInitioQuantumDynamics2012} uses a slightly different notation, but the meaning should be the same. 
+The secondary-space projector is given by
+\begin{align}
+    Q = 1 - \sum_{p} \ket{\phiket{p}} \! \bra{\phibra{p}}.
+\end{align}
+The definitions of the densities depend on whether biorthogonal\cite{kvaalInitioQuantumDynamics2012}
+or orthogonal\cite{satoTimedependentCompleteactivespaceSelfconsistentfield2013} orbitals are used.
+In the biorthogonal case, the plain one- and two-electron densities are used:
+\begin{align}
+    D_{qp}   &= \rho_{qp}, \\
+    P_{rspq} &= \rho_{rspq}.
+\end{align}
+In the orthogonal case, the densities are Hermitianized according to
+\begin{align}
+    D_{qp}   &= \tfrac{1}{2} ( \rho_{qp}   + \rho_{pq}^*   ), \\
+    P_{rspq} &= \tfrac{1}{2} ( \rho_{rspq} + \rho_{pqrs}^* ).
+\end{align}
+Having on orthogonal basis of course means $\bra{\phibra{p}} = \bra{\phiket{p}}$,
+which implies $Q = Q^{\dagger}$ and $W_{rs}^* = W_{sr}$. Using these relations
+and the Hermitianized densities one easily confirms that Eqs.~\eqref{eq:phiket_dot}
+and \eqref{eq:phibra_dot} are simply each other's adjoint,
+when the orbitals are orthogonal.
+
+We now introduce an underlying/primitive basis that is assumed to be biorthonormal.
+The time-dependent orbitals are given in terms of this basis as
+\begin{align}
+    \ket{\phiket{p}} = \sum_{\alpha} \ket{\chiket{\alpha}} C_{\alpha p},         \label{eq:phi_ket_expansion} \\
+    \bra{\phibra{p}} = \sum_{\alpha} \tilde{C}_{p \alpha} \bra{\chibra{\alpha}}, \label{eq:phi_bra_expansion}
+\end{align}
+with time-dependent coefficients. The primitive basis induces the following identity in
+the one-particle space:
+\begin{align}
+    1 = \sum_{\beta} \ket{\chiket{\beta}} \! \bra{\chibra{\beta}} 
+\end{align}
+Inserting this identity into Eq.~\eqref{eq:phiket_dot} and projecting onto $\bra{\chibra{\alpha}}$ yields
+\begin{multline}
+    i \braket{\chibra{\alpha} | \phiketdot{p}} 
+    = i \sum_{q} \braket{\chibra{\alpha} | \phiket{q}} \eta_{qp}
+    + \sum_{\beta} \elm{\chibra{\alpha}}{Q}{\chiket{\beta}} \Big[
+    \elm{\chibra{\beta}}{h}{\phiket{p}}
+    + \sum_{oqrs}  \elm{\chibra{\beta}}{W_{rs}}{\phiket{q}} P_{qsor} \, (\mathbf{D}^{-1})_{op}
+    \Big].
+\end{multline}
+Introducing matrix notation, this reads
+\begin{align} \label{eq:C_dot}
+    i \dot{\mathbf{C}} 
+    &= i \mathbf{C} \bm{\eta} + 
+    \mathbf{Q}  \big( \check{\mathbf{H}} + \check{\mathbf{F}} \mathbf{D}^{-1} \big) \nn
+    &= i \mathbf{C} \bm{\eta} + 
+    \mathbf{Q}  \big( \check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}} \big) \mathbf{D}^{-1} .
+\end{align}
+The secondary-space projector has matrix elements
+\begin{align}
+    Q_{\alpha \beta} 
+    &= \elm{\chibra{\alpha}}{Q}{\chiket{\beta}} \nn
+    &= \elm{\chibra{\alpha}}{(1 - P)}{\chiket{\beta}} \nn
+    &= \braket{\chibra{\alpha} | \chiket{\beta}} - \sum_{p} \braket{\chibra{\alpha} | \phiket{p}} \braket{\phibra{p} | \chiket{\beta}}
+\end{align}
+or simply
+\begin{align}
+    \mathbf{Q} = \mathbf{1} - \mathbf{C} \tilde{\mathbf{C}}.
+\end{align}
+The matrices $\check{\mathbf{H}}$ and $\check{\mathbf{F}}$ contain
+half-transformed one-electron integrals,
+\begin{gather}
+    \check{H}_{\beta p} = \elm{\chibra{\beta}}{h}{\phiket{p}} = h_{\beta p},
+\end{gather}
+and half-transformed mean-field elements,
+\begin{align}
+    \check{F}_{\beta o}
+    &= \sum_{qrs}  \elm{\chibra{\beta}}{W_{rs}}{\phiket{q}} P_{qsor} \nn
+    &= \sum_{qrs}
+    \int \chibra{\beta} (\mathbf{x}) \left[ 
+    \int \phibra{r}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{s}(\mathbf{y})  \dd{\mathbf{y}} 
+    \right] \phiket{q} (\mathbf{x}) \dd{\mathbf{x}}
+    P_{qsor} \nn
+    &= \sum_{qrs}
+    \iint \chibra{\beta} (\mathbf{x}) \phibra{r}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{q} (\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}} 
+    P_{qsor} \nn
+    &= \sum_{qrs}  u_{\beta r q s} P_{qsor}.
+\end{align}
+Using similar steps, Eq.~\eqref{eq:phibra_dot} leads to
+\begin{align} \label{eq:C_tilde_dot}
+    i \dot{\tilde{\mathbf{C}}} 
+    &= -i  \bm{\eta} \tilde{\mathbf{C}} - 
+    \big( \check{\mathbf{H}}' + \mathbf{D}^{-1} \check{\mathbf{F}}' \big) \mathbf{Q} \nn
+    &= -i  \bm{\eta} \tilde{\mathbf{C}} - 
+    \mathbf{D}^{-1} \big( \mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' \big) \mathbf{Q}
+\end{align}
+with
+\begin{gather}
+    \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta}, \\
+    \check{F}'_{o \beta} = \sum_{qrs} P_{osqr} u_{qr\beta s}.
+\end{gather}
+
+\section{Relation to other work}
+In Refs.~\citenum{madsenTimedependentVibrationalCoupled2020} and \citenum{hojlundBivariationalTimedependentWave2022},
+the parameter equations were derived (for the biorthogonal case) by assuming the expansions in
+Eqs.~\eqref{eq:phi_ket_expansion} and \eqref{eq:phi_bra_expansion} from the outset.
+Those derivations also apply to the electronic structure problem
+(this is an explicit point in Ref.\citenum{hojlundBivariationalTimedependentWave2022}), so we
+should check that they agree with Eqs.~\eqref{eq:C_dot} and \eqref{eq:C_tilde_dot}.
+Ignoring notational differences, we need to check that
+\begin{align}
+    \big[ \check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}} \big]_{\bar{\alpha} \bar{p}}
+    &= \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi},  \label{eq:F_check_correspondence} \\
+    \big[ \mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' \big]_{\bar{p} \bar{\alpha}} 
+    &= \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}}  }{\Psi}.  \label{eq:F_check_prime_correspondence}
+\end{align}
+Here, the operators $\creaprim{\bar{\alpha}}$ and $\anniprim{\bar{\alpha}}$ create and annihilate
+the primitive basis. We note that
+\begin{align}
+    \{ \anniprim{\bar{\alpha}}, \crea{p} \} &= C_{\bar{\alpha} p}, \\
+    \{ \anniprim{\bar{\alpha}}, \anni{p} \} &= 0, \\
+    \{ \anni{p}, \creaprim{\bar{\alpha}} \} &= \tilde{C}_{p \bar{\alpha}}, \\
+    \{ \crea{p}, \creaprim{\bar{\alpha}} \} &= 0,
+\end{align}
+which implies the following commutators:
+\begin{align}
+    [\anniprim{\bar{\alpha}}, \crea{p} \anni{q}] 
+    &= \{ \anniprim{\bar{\alpha}}, \crea{p} \} \anni{q} - \crea{p} \{ \anniprim{\bar{\alpha}}, \anni{p} \} \nn
+    &= C_{\bar{\alpha} p} \anni{q}
+\end{align}
+\begin{align}
+    [\anniprim{\bar{\alpha}}, \crea{p} \crea{q} \anni{s} \anni{r}] 
+    &= \{ \anniprim{\bar{\alpha}}, \crea{p} \} \crea{q} \anni{s} \anni{r} 
+     - \crea{p} \{ \anniprim{\bar{\alpha}}, \crea{q} \} \anni{s} \anni{r}
+     + \crea{p} \crea{p} \{ \anniprim{\bar{\alpha}}, \anni{s} \} \anni{r}
+     - \crea{p} \crea{p} \anni{s} \{ \anniprim{\bar{\alpha}}, \anni{r} \}  \nn
+    &= C_{\bar{\alpha} p} \crea{q} \anni{s} \anni{r} - C_{\bar{\alpha} q} \crea{p} \anni{s} \anni{r}
+\end{align}
+The right-hand side of Eq.~\eqref{eq:F_check_correspondence} now becomes
+\begin{align}
+    \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi} 
+    &= \sum_{pq} h_{pq} \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, \crea{p} \anni{q}] }{\Psi}
+    + \tfrac{1}{2} \sum_{pqrs} u_{pqrs} \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, \crea{p} \crea{q} \anni{s} \anni{r}] }{\Psi}
+\end{align}
+
+\newpage
+\bibliography{bib/madsgh.bib}
+
+\end{document}

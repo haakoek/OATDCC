@@ -1,0 +1,180 @@
+% Misc.
+\newcommand{\elm}[3]{\langle #1 \vert #2 \vert #3 \rangle}
+\newcommand{\nn}{\nonumber\\}
+
+% Creating/annihilation operators
+\newcommand{\crea}[1]{c^{\dagger}_{#1}}
+\newcommand{\anni}[1]{\tilde{c}_{#1}}
+\newcommand{\creaprim}[1]{a^{\dagger}_{#1}}
+\newcommand{\anniprim}[1]{\tilde{a}_{#1}}
+
+% Dual and primal active basis functions
+\newcommand{\phibra}[1]{\tilde{\varphi}_{#1}}
+\newcommand{\phiket}[1]{\varphi_{#1}}
+\newcommand{\chibra}[1]{\tilde{\chi}_{#1}}
+\newcommand{\chiket}[1]{\chi_{#1}}
+\newcommand{\phibradot}[1]{\dot{\tilde{\varphi}}_{#1}}
+\newcommand{\phiketdot}[1]{\dot{\varphi}_{#1}}
+
+
+
+% % Struts for extra spacing in tables/matrices
+% \newcommand{\topstrut}[1]{\rule{0pt}{#1}}
+% \newcommand{\bottomstrut}[1]{\rule[#1]{0pt}{0pt}}
+% \newcommand{\bothstrut}[2]{\rule[#1]{0pt}{#2}}
+% \newcommand\Tstrut{\rule{0pt}{2.4ex}}
+% \newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}
+% \newcommand\TTstrut{\rule{0pt}{3.0ex}}
+% \newcommand\BBstrut{\rule[-1.5ex]{0pt}{0pt}}
+
+% % Custom typographical commands
+% \newcommand{\mrm}[1]{\mathrm{#1}}
+% \newcommand{\mbf}[1]{\mathbf{#1}}
+% \newcommand{\nn}{\nonumber\\}
+% \newcommand{\trans}{\mspace{-3mu}\mathsf{T}}
+% \newcommand{\subA}{\mathrm{\scriptscriptstyle A}}
+% \newcommand{\subS}{\mathrm{\scriptscriptstyle S}}
+% \newcommand{\bigbraket}[2]{\Big\langle #1 \mspace{2mu} \Big\vert \mspace{1.5mu} #2 \Big\rangle}
+% \newcommand{\sss}[1]{\scriptscriptstyle #1}
+% \newcommand{\2}{\mspace{-2mu}}
+
+
+% % raised chi
+% \DeclareRobustCommand{\raisedchi}{{\mathpalette\irchi\relax}}
+% \newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}}
+
+% % raised rho
+% \DeclareRobustCommand{\raisedrho}{{\mathpalette\irrho\relax}}
+% \newcommand{\irrho}[2]{\raisebox{1pt}{$#1\rho$}}
+
+% % dcases environment with centering
+% \makeatletter
+% \renewenvironment{dcases}[1][l]{\matrix@check\dcases\env@dcases{#1}}{\endarray\right.}
+% \def\env@dcases#1{%
+%   \let\@ifnextchar\new@ifnextchar
+%   \left\lbrace\def\arraystretch{1.2}%
+%   \array{@{}#1@{\quad}l@{}}}
+% \makeatother
+
+% % custom bar
+% \newcommand*\xbar[1]{%
+%   \hbox{%
+%   \kern0.3em%
+%     \vbox{%
+%       \hrule height 0.5pt % The actual bar
+%       \kern0.3ex%         % Distance between bar and symbol
+%       \hbox{%
+%         \kern-0.3em%      % Shortening on the left side
+%         \ensuremath{#1}%
+%         \kern-0.2em%      % Shortening on the right side
+%       }%
+%     }%
+%     \kern0.2em%
+%   }%
+% } 
+
+% \DeclareFontFamily{OT1}{pzc}{}
+% \DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.10] pzcmi7t}{}
+% \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+% % Shift operators and similar
+% \newcommand{\Eplain}[3]{E^{#1}_{{#2} {#3}}}
+% \newcommand{\Etilde}[3]{\tilde{E}^{#1}_{{#2} {#3}}}
+% \newcommand{\Eplainprime}[3]{E^{#1'}_{{#2} {#3}}}
+% \newcommand{\Etildeprime}[3]{\tilde{E}^{#1'}_{{#2} {#3}}}
+
+% \newcommand{\Dplain}[3]{D^{#1}_{{#2} {#3}}}
+% \newcommand{\Dtilde}[3]{\widetilde{D}^{#1}_{{#2} {#3}}}
+% \newcommand{\Dplainprime}[3]{D^{#1'}_{{#2} {#3}}}
+% \newcommand{\Dtildeprime}[3]{\widetilde{D}^{#1'}_{{#2} {#3}}}
+
+% % Kappa matrix elements
+% \newcommand{\kappaplain}[3]{\kappa^{#1}_{{#2} {#3}}}
+% \newcommand{\kappaplaindot}[3]{\dot{\kappa}^{#1}_{{#2} {#3}}}
+% \newcommand{\kappaplainprime}[3]{\kappa^{#1'}_{{#2} {#3}}}
+
+% % G matrix elements
+% \newcommand{\gplain}[3]{g^{#1}_{{#2} {#3}}}
+% \newcommand{\gplainprime}[3]{g^{#1'}_{{#2} {#3}}}
+
+% % Mean-field matrices
+% \newcommand{\FFcheckplain}[1]{\check{\mbf{F}}^{#1}}
+% \newcommand{\FFcheckprime}[1]{\check{\mbf{F}}^{\prime#1}}
+% \newcommand{\FFcheckplaindagger}[1]{\check{\mbf{F}}^{#1\dagger}}
+% \newcommand{\FFcheckprimedagger}[1]{\check{\mbf{F}}^{\prime#1\dagger}}
+% \newcommand{\FFtildeplain}[1]{\tilde{\mbf{F}}^{#1}}
+% \newcommand{\FFtildeprime}[1]{\tilde{\mbf{F}}^{\prime#1}}
+% \newcommand{\FFtildeplaindagger}[1]{\tilde{\mbf{F}}^{#1\dagger}}
+% \newcommand{\FFtildeprimedagger}[1]{\tilde{\mbf{F}}^{\prime#1\dagger}}
+
+% % Mean-field matrix elements
+% \newcommand{\Fcheckplain}[3]{\check{F}^{#1}_{{#2} {#3}}}
+% \newcommand{\Fcheckplainconj}[3]{\check{F}^{#1*}_{{#2} {#3}}}
+% \newcommand{\Fcheckprime}[3]{\check{F}^{\prime#1}_{{#2} {#3}}}
+% \newcommand{\Ftildeplain}[3]{\tilde{F}^{#1}_{{#2} {#3}}}
+% \newcommand{\Ftildeprime}[3]{\tilde{F}^{\prime#1}_{{#2} {#3}}}
+% \newcommand{\Fplain}[3]{F^{#1}_{{#2} {#3}}}
+% \newcommand{\fplain}[3]{f_{(#1  {#2} {#3})}}
+% \newcommand{\fbarplain}[3]{\bar{f}_{(#1  {#2} {#3})}}
+% \newcommand{\fbarprime}[3]{\bar{f}^{\prime}_{(#1  {#2} {#3})}}
+% \newcommand{\fbarprimeconj}[3]{\bar{f}^{\prime*}_{(#1  {#2} {#3})}}
+
+% % Density elements
+% \newcommand{\rrho}[3]{\rho^{#1}_{#2 #3}}
+% \newcommand{\rrhodot}[3]{\dot{\rho}^{#1}_{#2 #3}}
+% \newcommand{\rrhoconj}[3]{\rho^{#1*}_{#2 #3}}
+
+% % Z matrix elements
+% \newcommand{\Zplain}[3]{Z^{#1}_{#2^{#1} #3^{#1}}}
+% \newcommand{\Zplainconj}[3]{Z^{#1*}_{#2^{#1} #3^{#1}}}
+
+
+% % D matrix elements
+% \newcommand{\dplain}[5]{d^{#1}_{({#2} {#3}) ({#4} {#5})}}
+% \newcommand{\dtilde}[5]{\tilde{d}^{#1}_{({#2} {#3}) ({#4} {#5})}}
+% \newcommand{\dplainprime}[5]{d^{#1'}_{ ({#2} {#3}) ({#4} {#5}) } }
+% \newcommand{\dfullplain}[6]{d_{ ({#1} \, {#2}  {#3}) ({#4'} {#5} {#6}) } }
+
+% % C matrix elements
+% \newcommand{\Cprime}[6]{C^{\prime}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+% \newcommand{\Cprimeconj}[6]{C^{\prime*}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+% \newcommand{\Cplain}[6]{C_{ ({#1} {#2}  {#3}) ({#4'} {#5} {#6}) } }
+% \newcommand{\Cbarplain}[6]{\bar{C}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+% \newcommand{\Cbarprime}[6]{\bar{C}^{\prime}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+% \newcommand{\Cbarconj}[6]{\bar{C}^{*}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+% \newcommand{\Cbarprimeconj}[6]{\bar{C}^{\prime*}_{ ({#1}  {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+
+
+% % A matrix elements
+% \newcommand{\Aprime}[4]{A_{ {#1} ({#2'} {#3} {#4}) } }
+% \newcommand{\Aplain}[4]{A_{ {#1} ({#2}  {#3} {#4}) } }
+% \newcommand{\Atildeprime}[4]{\tilde{A}_{ {#1} ({#2'} {#3}^{#2^{\smash{\prime}}} \! {#4}^{#2^{\smash{\prime}}}) } }
+% \newcommand{\Atildeplain}[4]{\tilde{A}_{ {#1} ({#2} \, {#3}^{#2} {#4}^{#2}) } }
+
+% % S matrix elements
+% \newcommand{\Splain}[6]{S_{ ({#1} \, {#2}^{#1}  {#3}^{#1}) ({#4'} {#5}^{#4^{\smash{\prime}}} \! {#6}^{#4^{\smash{\prime}}}) } }
+
+% % Creating/annihilation operators
+% \newcommand{\aplain}[2]{a^{#1\mspace{-0.5mu}\raisebox{0.3ex}{$\scriptstyle\dagger$}}_{\mspace{-0mu}#2}}
+% \newcommand{\aprime}[2]{a^{#1^{\smash{\prime}}\mspace{-0.5mu}\raisebox{0.6ex}{$\scriptstyle\dagger$}}_{\mspace{-0mu}#2}}
+% \newcommand{\bplain}[2]{b^{#1}_{\mspace{-1mu}#2}}
+% \newcommand{\bprime}[2]{b^{#1^{\smash{\prime}}}_{\mspace{-1mu}#2}}
+% \newcommand{\crea}[2]{a^{#1\mspace{-0.5mu}\raisebox{0.3ex}{$\scriptstyle\dagger$}}_{\mspace{-0mu}#2}}
+% \newcommand{\creatilde}[2]{\tilde{a}^{#1\mspace{-0.5mu}\raisebox{0.3ex}{$\scriptstyle\dagger$}}_{\mspace{-0mu}#2}}
+% \newcommand{\anni}[2]{a^{#1}_{\mspace{-0mu}#2}}
+% \newcommand{\annitilde}[2]{\tilde{a}^{#1}_{\mspace{-0mu}#2}}
+% \newcommand{\annitildeprime}[2]{\tilde{a}^{#1^{\smash{\prime}}}_{\mspace{-0mu}#2}}
+
+% % Excitation/deexcitation operators
+% \newcommand{\tauplaindagger}[2]{\tau^{#1\mspace{-0.5mu}\raisebox{0.3ex}{$\scriptstyle\ddagger$}}_{#2}}
+% \newcommand{\tauplain}[2]{\tau^{#1}_{#2}}
+
+% % Modal matrix elements
+% \newcommand{\uplain}[3]{U^{#1}_{#2 #3}}
+% \newcommand{\uplaindot}[3]{\dot{U}^{#1}_{#2 #3}}
+% \newcommand{\wplain}[3]{W^{#1}_{#2 #3}}
+% \newcommand{\wplaindot}[3]{\dot{W}^{#1}_{#2 #3}}
+% \newcommand{\vplain}[3]{V^{#1}_{\mspace{-2mu} #2 #3}}
+% \newcommand{\vplainconj}[3]{V^{#1*}_{\mspace{-2mu} #2 #3}}
+% \newcommand{\vplaindot}[3]{\dot{V}^{#1}_{\mspace{-2mu} #2 #3}}
+% \newcommand{\vplaindotconj}[3]{\dot{V}^{#1*}_{\mspace{-2mu} #2 #3}}
