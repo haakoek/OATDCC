@@ -30,7 +30,7 @@
 
 The Hamiltonian is written using physicist's notation for the integrals (which are not anti-symmetrized):
 \begin{align}
-    H = \sum_{pq} h_{pq} \crea{p} \anni{q} + \tfrac{1}{2} \sum_{pqrs} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+    H = \sum_{pq} h_{pq} \crea{p} \anni{q} + \frac{1}{2} \sum_{pqrs} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
 \end{align}
 \begin{align}
     h_{pq} 
@@ -154,7 +154,7 @@ and half-transformed mean-field elements,
     &= \sum_{qrs}
     \iint \chibra{\beta} (\mathbf{x}) \phibra{r}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{q} (\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}} 
     P_{qsor} \nn
-    &= \sum_{qrs}  u_{\beta r q s} P_{qsor}.
+    &= \sum_{qrs}  u_{\beta r q s} P_{qsor}. \label{eq:F_check_from_u_and_rho}
 \end{align}
 Using similar steps, Eq.~\eqref{eq:phibra_dot} leads to
 \begin{align} \label{eq:C_tilde_dot}
@@ -166,8 +166,8 @@ Using similar steps, Eq.~\eqref{eq:phibra_dot} leads to
 \end{align}
 with
 \begin{gather}
-    \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta}, \\
-    \check{F}'_{o \beta} = \sum_{qrs} P_{osqr} u_{qr\beta s}.
+    \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta},  \\
+    \check{F}'_{o \beta} = \sum_{qrs} P_{osqr} u_{qr\beta s}.\label{eq:F_check_prime_from_u_and_rho}
 \end{gather}
 
 \section{Relation to other work}
@@ -195,23 +195,123 @@ the primitive basis. We note that
 which implies the following commutators:
 \begin{align}
     [\anniprim{\bar{\alpha}}, \crea{p} \anni{q}] 
-    &= \{ \anniprim{\bar{\alpha}}, \crea{p} \} \anni{q} - \crea{p} \{ \anniprim{\bar{\alpha}}, \anni{p} \} \nn
+    &= \{ \anniprim{\bar{\alpha}}, \crea{p} \} \anni{q} - \crea{p} \{ \anniprim{\bar{\alpha}}, \anni{q} \} \nn
     &= C_{\bar{\alpha} p} \anni{q}
 \end{align}
+%
+\begin{align}
+    [\crea{p} \anni{q}, \creaprim{\bar{\alpha}}] 
+    &= - \{ \crea{p}, \creaprim{\bar{\alpha}} \} \anni{q} + \crea{p} \{ \anni{q}, \creaprim{\bar{\alpha}} \} \nn
+    &= \crea{p} \tilde{C}_{q \bar{\alpha}} 
+\end{align}
+%
 \begin{align}
     [\anniprim{\bar{\alpha}}, \crea{p} \crea{q} \anni{s} \anni{r}] 
     &= \{ \anniprim{\bar{\alpha}}, \crea{p} \} \crea{q} \anni{s} \anni{r} 
      - \crea{p} \{ \anniprim{\bar{\alpha}}, \crea{q} \} \anni{s} \anni{r}
-     + \crea{p} \crea{p} \{ \anniprim{\bar{\alpha}}, \anni{s} \} \anni{r}
-     - \crea{p} \crea{p} \anni{s} \{ \anniprim{\bar{\alpha}}, \anni{r} \}  \nn
+     + \crea{p} \crea{q} \{ \anniprim{\bar{\alpha}}, \anni{s} \} \anni{r}
+     - \crea{p} \crea{q} \anni{s} \{ \anniprim{\bar{\alpha}}, \anni{r} \}  \nn
     &= C_{\bar{\alpha} p} \crea{q} \anni{s} \anni{r} - C_{\bar{\alpha} q} \crea{p} \anni{s} \anni{r}
+\end{align}
+%
+\begin{align}
+    [\crea{p} \crea{q} \anni{s} \anni{r}, \creaprim{\bar{\alpha}} ] 
+    &= 
+    - \{ \crea{p}, \creaprim{\bar{\alpha}} \} \crea{q} \anni{s} \anni{r} 
+    + \crea{p} \{ \crea{q}, \creaprim{\bar{\alpha}} \} \anni{s} \anni{r}
+    - \crea{p} \crea{q} \{ \anni{s}, \creaprim{\bar{\alpha}} \} \anni{r}
+    + \crea{p} \crea{q} \anni{s} \{ \anni{r}, \creaprim{\bar{\alpha}} \}  \nn
+    &= -\crea{p} \crea{q} \anni{r} \tilde{C}_{s \bar{\alpha}} + \crea{p} \crea{q} \anni{s} \tilde{C}_{r \bar{\alpha}} 
 \end{align}
 The right-hand side of Eq.~\eqref{eq:F_check_correspondence} now becomes
 \begin{align}
     \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi} 
     &= \sum_{pq} h_{pq} \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, \crea{p} \anni{q}] }{\Psi}
-    + \tfrac{1}{2} \sum_{pqrs} u_{pqrs} \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, \crea{p} \crea{q} \anni{s} \anni{r}] }{\Psi}
+    + \frac{1}{2} \sum_{pqrs} u_{pqrs} \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, \crea{p} \crea{q} \anni{s} \anni{r}] }{\Psi} \nn
+    &= 
+    \begin{multlined}[t]
+        \sum_{pq} C_{\bar{\alpha} p} h_{pq} \elm{\tilde{\Psi}}{ \crea{\bar{p}} \anni{q} }{\Psi} \\
+        + \frac{1}{2} \sum_{pqrs} \left( 
+            C_{\bar{\alpha} p} u_{pqrs} \elm{\tilde{\Psi}}{ \crea{\bar{p}} \crea{q} \anni{s} \anni{r} }{\Psi} -
+            C_{\bar{\alpha} q} u_{pqrs} \elm{\tilde{\Psi}}{ \crea{\bar{p}} \crea{p} \anni{s} \anni{r} }{\Psi}
+        \right)
+    \end{multlined} \nn
+    &=  \sum_{pq} C_{\bar{\alpha} p} h_{pq} \rho_{q \bar{p}}
+    + \frac{1}{2} \sum_{pqrs} \left( 
+        C_{\bar{\alpha} p} u_{pqrs} \rho_{rs \bar{p} q} -
+        C_{\bar{\alpha} q} u_{pqrs} \rho_{rs \bar{p} p}
+    \right) \label{eq:F_check_correspondence_proof_1}
 \end{align}
+The last term can be simplified by renaming summation indices ($p \leftrightarrow q$ and $r \leftrightarrow s$)
+followed by the identities $u_{qpsr} = u_{pqrs}$ and
+$\rho_{sr\bar{p}q} = -\rho_{rs\bar{p}q}$:
+\begin{align}
+       \sum_{pqrs} C_{\bar{\alpha} q} u_{pqrs} \rho_{rs \bar{p} p} 
+    =  \sum_{pqrs} C_{\bar{\alpha} p} u_{qpsr} \rho_{sr \bar{p} q}
+    = -\sum_{pqrs} C_{\bar{\alpha} p} u_{pqrs} \rho_{rs \bar{p} q}.
+\end{align}
+Combining this with Eq.~\eqref{eq:F_check_correspondence_proof_1} now yields
+\begin{align}
+    \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi} 
+    &= \sum_{pq}   C_{\bar{\alpha} p} h_{pq}   \rho_{q \bar{p}}
+    +  \sum_{pqrs} C_{\bar{\alpha} p} u_{pqrs} \rho_{rs \bar{p} q}  \nn
+    &= \sum_{q}    h_{\bar{\alpha} q}   \rho_{q \bar{p}}
+    +  \sum_{qrs}  u_{\bar{\alpha} qrs} \rho_{rs \bar{p} q}
+    \label{eq:F_check_correspondence_proof_2}
+\end{align}
+which agrees with Eqs.~\eqref{eq:F_check_from_u_and_rho} and \eqref{eq:F_check_correspondence}.
+In the last step we have used
+\begin{align}
+    \sum_{p}  C_{\bar{\alpha} p} h_{pq} 
+    = \sum_{p \beta} C_{\bar{\alpha} p} \tilde{C}_{p \beta} h_{\beta q}
+    = h_{\bar{\alpha} q}.
+\end{align}
+This holds if
+\begin{align} \label{eq:C_C_tilde_inverse}
+    \sum_{p \beta} C_{\bar{\alpha} p} \tilde{C}_{p \beta} = \delta_{\bar{\alpha} \beta},
+\end{align}
+which is \textit{not} true if the $p$ summation runs over active (occupied and virtual) orbitals. However,
+since the primitive basis is finite,
+we are free to temporarily introduce the secondary basis (i.e. the complement of the active basis) explicitly.
+This means that $\mathbf{C}$ and $\tilde{\mathbf{C}}$ become square (rather than rectangular) matrices:
+\begin{alignat}{2}
+    \mathbf{C} 
+    &= 
+    \left[
+	\begin{array}{c}
+        \mathbf{C}_{\textsc{A}}
+	\end{array} \right]
+    %
+    {} &&\rightarrow
+    \left[
+	\begin{array}{c | c}
+        \mathbf{C}_{\textsc{A}} {\,} & {\,} \mathbf{C}_{\textsc{S}} 
+	\end{array} \right] \\
+    %%%%
+    \tilde{\mathbf{C}} 
+    &= 
+    \left[
+	\begin{array}{c}
+        \tilde{\mathbf{C}}_{\textsc{A}}
+	\end{array} \right]
+    %
+    {} &&\rightarrow
+    \left[
+	\begin{array}{c}
+        \tilde{\mathbf{C}}_{\textsc{A}} \\
+        \hline
+        \tilde{\mathbf{C}}_{\textsc{S}} 
+	\end{array} \right]
+\end{alignat}
+Since the full matrices are square we get that biorthogonality ($\tilde{\mathbf{C}} \mathbf{C} = \mathbf{1}$)
+implies $\mathbf{C}  \tilde{\mathbf{C}} = \mathbf{1}$, which is exactly Eq.~\eqref{eq:C_C_tilde_inverse}.
+We will never actually construct the secondary basis; we only need its \textit{existence} to complete the proof.
+A similar derivation shows that
+\begin{align}
+    \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}}  }{\Psi}
+    = \sum_{p} \rho_{\bar{p}p} h_{p \bar{\alpha}} + \sum_{pqs} \rho_{\bar{p}spq} u_{pq\bar{\alpha}s},
+\end{align}
+which agrees with Eqs.~\eqref{eq:F_check_prime_from_u_and_rho} and \eqref{eq:F_check_prime_correspondence}.
 
 \newpage
 \bibliography{bib/madsgh.bib}
