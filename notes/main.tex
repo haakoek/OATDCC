@@ -52,6 +52,9 @@ The two-electron integrals and densities have the following useful permutation s
     u_{pqrs}    &= u_{qpsr}, \\
     \rho_{rspq} &= \rho_{srqp}.
 \end{align}
+In the following, we use $o,p,q,r,s$ to index active orbitals. In coupled cluster
+theory, the active orbitals are additionally divided into reference/occupied orbitals ($i,j,\ldots$)
+and virtual orbitals ($a,b,\ldots$).
 
 
 \section{Converting orbital equations to parameter equations}
@@ -92,19 +95,24 @@ In the orthogonal case, the densities are Hermitianized according to
     D_{qp}   &= \tfrac{1}{2} ( \rho_{qp}   + \rho_{pq}^*   ), \\
     P_{rspq} &= \tfrac{1}{2} ( \rho_{rspq} + \rho_{pqrs}^* ).
 \end{align}
-Having on orthogonal basis of course means $\bra{\phibra{p}} = \bra{\phiket{p}}$,
+Having an orthogonal basis of course means $\bra{\phibra{p}} = \bra{\phiket{p}}$,
 which implies $Q = Q^{\dagger}$ and $W_{rs}^* = W_{sr}$. Using these relations
 and the Hermitianized densities one easily confirms that Eqs.~\eqref{eq:phiket_dot}
 and \eqref{eq:phibra_dot} are simply each other's adjoint,
 when the orbitals are orthogonal.
 
-We now introduce an underlying/primitive basis that is assumed to be biorthonormal.
-The time-dependent orbitals are given in terms of this basis as
+We now introduce an underlying/primitive basis that is indexed by greek subscripts and assumed to be biorthonormal.
+The time-dependent, active orbitals are given in terms of this basis as
 \begin{align}
     \ket{\phiket{p}} = \sum_{\alpha} \ket{\chiket{\alpha}} C_{\alpha p},         \label{eq:phi_ket_expansion} \\
     \bra{\phibra{p}} = \sum_{\alpha} \tilde{C}_{p \alpha} \bra{\chibra{\alpha}}, \label{eq:phi_bra_expansion}
 \end{align}
-with time-dependent coefficients. The primitive basis induces the following identity in
+with time-dependent coefficients. 
+Using $N$ and $N_{\!\textsc{A}} \leq N$ to denote the number of primitive and active
+basis functions, respectively, we have that
+$\mathbf{C}$         is $N \times N_{\!\textsc{A}}$ (tall) and 
+$\tilde{\mathbf{C}}$ is $N_{\!\textsc{A}} \times N$ (wide).
+The primitive basis induces the following identity in
 the one-particle space:
 \begin{align}
     1 = \sum_{\beta} \ket{\chiket{\beta}} \! \bra{\chibra{\beta}} 
@@ -169,8 +177,22 @@ with
     \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta},  \\
     \check{F}'_{o \beta} = \sum_{qrs} P_{osqr} u_{qr\beta s}.\label{eq:F_check_prime_from_u_and_rho}
 \end{gather}
+When the active basis is orthogonal ($\tilde{\mathbf{C}} = \mathbf{C}^{\dagger}$), we gain a lot of
+additional structure, at least when the primitive basis is also taken to be orthogonal:
+\begin{gather}
+    \mathbf{Q}^{\dagger}          = \mathbf{Q}, \quad 
+    \mathbf{D}^{\dagger}          = \mathbf{D}, \quad 
+    (\mathbf{D}^{-1})^{\dagger}   = \mathbf{D}^{-1} \\
+    \check{\mathbf{H}}^{\dagger}  = \check{\mathbf{H}}^{\prime}, \quad 
+    \check{\mathbf{F}}^{\dagger}  = \check{\mathbf{F}}^{\prime}, \quad
+    \bm{\eta}^{\dagger}           = -\bm{\eta}
+\end{gather}
+All of these (except the last) are easy to show and imply that
+$\dot{\mathbf{C}}^{\dagger} = \dot{\tilde{\mathbf{C}}}$ as expected;
+see Eqs.~\eqref{eq:C_dot} and \eqref{eq:C_tilde_dot}.
 
 \section{Relation to other work}
+\subsection{Biorthogonal case}
 In Refs.~\citenum{madsenTimedependentVibrationalCoupled2020} and \citenum{hojlundBivariationalTimedependentWave2022},
 the parameter equations were derived (for the biorthogonal case) by assuming the expansions in
 Eqs.~\eqref{eq:phi_ket_expansion} and \eqref{eq:phi_bra_expansion} from the outset.
@@ -307,14 +329,118 @@ Since the full matrices are square we get that biorthogonality ($\tilde{\mathbf{
 implies $\mathbf{C}  \tilde{\mathbf{C}} = \mathbf{1}$, which is exactly Eq.~\eqref{eq:C_C_tilde_inverse}.
 We will never actually construct the secondary basis; we only need its \textit{existence} to complete the proof.
 A similar derivation shows that
-\begin{align}
+\begin{align} \label{eq:F_check_prime_correspondence_proof_2}
     \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}}  }{\Psi}
     = \sum_{p} \rho_{\bar{p}p} h_{p \bar{\alpha}} + \sum_{pqs} \rho_{\bar{p}spq} u_{pq\bar{\alpha}s},
 \end{align}
 which agrees with Eqs.~\eqref{eq:F_check_prime_from_u_and_rho} and \eqref{eq:F_check_prime_correspondence}.
 
+\subsection{Orthogonal case}
+
+In the orthogonal case, one can also derive the parameter equations
+by assuming the expansion in a primitive basis from the outset.
+These equations are not yet published, but the thing we need to check is
+that
+\begin{align}
+    \big[ \check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}} \big]_{\bar{\alpha} \bar{p}}
+    &= \frac{1}{2} \left( 
+        \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi} + 
+        \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}} }{\Psi}^* 
+    \right).
+    \label{eq:F_check_correspondence_orthogonal}
+\end{align}
+We can reuse Eqs.~\eqref{eq:F_check_correspondence_proof_2} and \eqref{eq:F_check_prime_correspondence_proof_2}
+for the commutators as well as the permutation symmetries
+\begin{align}
+    h_{p \bar{\alpha}}^*     &= h_{\bar{\alpha} p}, \\
+    u_{p q \bar{\alpha} s}^* &= u_{\bar{\alpha} s p q},
+\end{align}
+which hold when the active and primitive bases are both orthogonal. After some renaming
+of summation indices, one indeed finds that
+\begin{align}
+    \frac{1}{2} \left( 
+        \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi} + 
+        \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}} }{\Psi}^* 
+    \right)
+    = \sum_{q} h_{\bar{\alpha} q} D_{q \bar{p}} + \sum_{qrs} u_{\bar{\alpha} q r s} P_{rs \bar{p} q},
+\end{align}
+in agreement with Eqs.~\eqref{eq:F_check_from_u_and_rho} and \eqref{eq:F_check_correspondence_orthogonal}.
+
+
+\section{Detailed derivation of orbital equations}
+\subsection{Biorthogonal case}
+This derivation follows the appendix of Ref.~\citenum{kvaalInitioQuantumDynamics2012}
+quite closely, but explains the steps in more detail. We consider a complex
+action functional,
+\begin{align}
+    \mathcal{S} = \int_{t_0}^{t_1} \mathcal{L} \dd{t}, \quad \mathcal{L} = \elm{\tilde{\Psi}}{(i \partial_t - H)}{\Psi},
+\end{align}
+which we will make stationary ($\delta \mathcal{S} = 0$) with respect to independent
+and arbitrary variations that vanish at the end points. The fact that
+the variations are independent allows us to vary each variable separately
+(rather than varying everything at once).
+
+We will consider bra and ket states that depend on a set of correlation
+parameters $\bm{\alpha}$ as well as the active bra and ket orbitals,
+$\{ \phibra{p} \}$ and $\{ \phiket{p} \}$. For the traditional coupled cluster
+ansatz, the correlation parameters are of course the amplitudes
+$\bm{\alpha} = \{ \lambda_\mu, t_\mu \}$, but we could consider
+other options such extended coupled cluster or bivariational CI-expansions.
+
+In order to compute the Lagrangian $\mathcal{L}$, we need to consider
+the action of the time-derivative on the ket. It is useful to start by
+considering a single Slater determinant (in the spin-orbital basis):
+\begin{align}
+    \ket{\mu} = \prod_{k=1}^N \creasuper{p}{k} \ket{\mathrm{vac}}.
+\end{align}
+Here, $N$ denotes the number of electrons. The time-derivative of
+$\ket{\mu}$ is evaluated using the product rule:
+\begin{align}
+    \ket{\dot{\mu}} = \sum_{l=1}^{N} \left( \, \prod_{k < l} \creasuper{p}{k} \right) \creasuperdot{p}{l} \left( \, \prod_{k > l} \creasuper{p}{k} \right) \ket{\mathrm{vac}}.
+\end{align}
+Now, $\{ \crea{p}, \creadot{q} \} = 0$, so we can move $\creasuperdot{p}{l}$ all the way to the left in each term
+by changing the sign $l - 1$ times, i.e.
+\begin{align}
+    \ket{\dot{\mu}} = \sum_{l=1}^{N} (-1)^{l-1} \, \creasuperdot{p}{l} \left( \, \prod_{k \neq l} \creasuper{p}{k} \right) \ket{\mathrm{vac}}.
+\end{align}
+Next, we insert
+\begin{align} \label{eq:clever_1}
+    1 = \{ \annisuper{p}{l}, \creasuper{p}{l} \} = \annisuper{p}{l} \creasuper{p}{l} + \creasuper{p}{l} \annisuper{p}{l}
+\end{align}
+to the right of $\creasuperdot{p}{l}$ and note that $\{ \annisuper{p}{l}, \creasuper{p}{k} \} = 0$ for $l \neq k$.
+We can thus move $\annisuper{p}{l}$ in the second term of Eq.~\eqref{eq:clever_1} all the way to right
+(under suitable sign changes), where it annihilates the vacuum. Hence, only the first term survives:
+\begin{align}
+    \ket{\dot{\mu}} = \sum_{l=1}^{N} (-1)^{l-1} \, \creasuperdot{p}{l} \annisuper{p}{l} \creasuper{p}{l} \left( \, \prod_{k \neq l} \creasuper{p}{k} \right) \ket{\mathrm{vac}}.
+\end{align}
+Finally, $\creasuper{p}{l}$ is to the $l$th slot in the product by changing the sign $l - 1$ times.
+The two factors of $(-1)^{l-1}$ cancel, leaving us with
+\begin{align}
+    \ket{\dot{\mu}} 
+    &= \sum_{l=1}^{N}  \creasuperdot{p}{l} \annisuper{p}{l}  \left( \, \prod_{k=1}^{N} \creasuper{p}{k} \right) \ket{\mathrm{vac}} \nn
+    &= \sum_{l=1}^{N}  \creasuperdot{p}{l} \annisuper{p}{l}  \ket{\mu} \nn
+    &= \sum_{p}        \creadot{p} \anni{p} \ket{\mu}.
+\end{align}
+In the last step we have added terms for each of the orbitals that are not present in $\ket{\mu}$. These terms vanish, since the annihilator
+$\anni{p}$ can be moved all the way to right for $p \notin \mu$. We now have an expression that does not refer to the specific orbitals
+in $\ket{\mu}$, so it must hold for all $\ket{\mu}$. We thus write
+\begin{align}
+    \ket{\dot{\mu}} = D \ket{\mu}, \quad D = \sum_{p} \creadot{p} \anni{p}
+\end{align}
+with the sum running over all active orbitals. For a bra Slater determinant, the same kind of proof yields
+\begin{align}
+    \bra{\dot{\tilde{\mu}}} = \bra{\tilde{\mu}} \sum_{p} \crea{p} \annidot{p}.
+\end{align}
+We will also need the variation of bra and ket determinants, but since
+the (first-order) variation satisfies the product rule (Leibniz rule) just like
+the time derivative, the proofs are identical (the time derivative is, in fact,
+an allowed variation). The result is simply
+\begin{align}
+    \ket{\dot{\mu}}         &= \sum_{p} \creadot{p} \anni{p} \ket{\mu} \\
+    \bra{\dot{\tilde{\mu}}} &= \bra{\tilde{\mu}} \sum_{p} \crea{p} \annidot{p}.
+\end{align}
+
 \begin{itemize}
-    \item Orthogonal case?
     \item Ground state in exponential parameterization?
     \item Detailed derivation (also vibrational case).
 \end{itemize}
