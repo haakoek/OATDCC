@@ -142,7 +142,7 @@ The secondary-space projector has matrix elements
     &= \braket{\chibra{\alpha} | \chiket{\beta}} - \sum_{p} \braket{\chibra{\alpha} | \phiket{p}} \braket{\phibra{p} | \chiket{\beta}}
 \end{align}
 or simply
-\begin{align}
+\begin{align} \label{eq:Q_proj_matrix}
     \mathbf{Q} = \mathbf{1} - \mathbf{C} \tilde{\mathbf{C}}.
 \end{align}
 The matrices $\check{\mathbf{H}}$ and $\check{\mathbf{F}}$ contain
@@ -376,13 +376,17 @@ action functional,
     \mathcal{S} = \int_{t_0}^{t_1} \mathcal{L} \dd{t}, \quad \mathcal{L} = \elm{\tilde{\Psi}}{(i \partial_t - H)}{\Psi},
 \end{align}
 which we will make stationary ($\delta \mathcal{S} = 0$) with respect to independent
-and arbitrary variations that vanish at the end points. The fact that
-the variations are independent allows us to vary each variable separately
-(rather than varying everything at once).
+and arbitrary variations that vanish at the end points. 
 
 We will consider bra and ket states that depend on a set of correlation
 parameters $\bm{\alpha}$ as well as the active bra and ket orbitals,
-$\{ \phibra{p} \}$ and $\{ \phiket{p} \}$. For the traditional coupled cluster
+$\{ \phibra{p} \}$ and $\{ \phiket{p} \}$. The orbitals stand in 
+a one-to-one relationship with the corresponding annihilators
+and creators, $\{ \anni{p} \}$ and $\{ \crea{p} \}$, and
+we will use the `first-quantized' orbitals and the `second-quantized'
+elementary operators more or less interchangeably, depending on
+context and convenience.
+For the traditional coupled cluster
 ansatz, the correlation parameters are of course the amplitudes
 $\bm{\alpha} = \{ \lambda_\mu, t_\mu \}$, but we could consider
 other options such extended coupled cluster or bivariational CI-expansions.
@@ -393,7 +397,18 @@ considering a single Slater determinant (in the spin-orbital basis):
 \begin{align}
     \ket{\mu} = \prod_{k=1}^N \creasuper{p}{k} \ket{\mathrm{vac}}.
 \end{align}
-Here, $N$ denotes the number of electrons. The time-derivative of
+Here, $N$ denotes the number of electrons. 
+We can think
+of $\mu$ as a set of integers that specifies
+the occupied spin orbitals, i.e.
+\begin{align}
+    \mu = (p^1, p^2, \ldots, p^N).
+\end{align}
+This is not an occupation number vector
+in the sense of Helgaker et al.,\cite{helgakerMolecularElectronicstructureTheory2000}
+but it contains the same information. The integers $p^k$
+are distinct, since we are working in the spin-orbital basis.
+The time-derivative of
 $\ket{\mu}$ is evaluated using the product rule:
 \begin{align}
     \ket{\dot{\mu}} = \sum_{l=1}^{N} \left( \, \prod_{k < l} \creasuper{p}{k} \right) \creasuperdot{p}{l} \left( \, \prod_{k > l} \creasuper{p}{k} \right) \ket{\mathrm{vac}}.
@@ -413,7 +428,7 @@ We can thus move $\annisuper{p}{l}$ in the second term of Eq.~\eqref{eq:clever_1
 \begin{align}
     \ket{\dot{\mu}} = \sum_{l=1}^{N} (-1)^{l-1} \, \creasuperdot{p}{l} \annisuper{p}{l} \creasuper{p}{l} \left( \, \prod_{k \neq l} \creasuper{p}{k} \right) \ket{\mathrm{vac}}.
 \end{align}
-Finally, $\creasuper{p}{l}$ is to the $l$th slot in the product by changing the sign $l - 1$ times.
+Finally, $\creasuper{p}{l}$ is moved to the $l$th slot in the product by changing the sign $l - 1$ times.
 The two factors of $(-1)^{l-1}$ cancel, leaving us with
 \begin{align}
     \ket{\dot{\mu}} 
@@ -436,13 +451,87 @@ the (first-order) variation satisfies the product rule (Leibniz rule) just like
 the time derivative, the proofs are identical (the time derivative is, in fact,
 an allowed variation). The result is simply
 \begin{align}
-    \ket{\dot{\mu}}         &= \sum_{p} \creadot{p} \anni{p} \ket{\mu} \\
-    \bra{\dot{\tilde{\mu}}} &= \bra{\tilde{\mu}} \sum_{p} \crea{p} \annidot{p}.
+    \ket{\delta \mu}         &= \sum_{p} (\creavar{p}) \anni{p} \ket{\mu} \\
+    \bra{\delta \tilde{\mu}} &= \bra{\tilde{\mu}} \sum_{p} \crea{p} (\annivar{p}).
 \end{align}
+It is useful at this point to consider what the allowed
+orbital variations look like. The variations should be
+arbitrary under the constraint that they
+conserve biorthogonality, i.e. the overlap
+$\braket{\phibra{p} | \phiket{q}} = \delta_{pq}$
+should be conserved:
+\begin{align}
+    0 = \delta \braket{\phibra{p} | \phiket{q}} = 
+    \braket{\phibravar{p} | \phiket{q}} + \braket{\phibra{p} | \phiketvar{q}}.
+\end{align}
+This is trivially satisfied if
+\begin{subequations} \label{eq:bra_ket_variation_link}
+    \begin{align}
+        \braket{\phibra{p} | \phiketvar{q}} &= +\epsilon_{pq} \\
+        \braket{\phibravar{p} | \phiket{q}} &= -\epsilon_{pq},
+    \end{align}
+\end{subequations}
+where $\epsilon_{pq}$ is an arbitrary scalar.
+Equations~\eqref{eq:bra_ket_variation_link} show very clearly how the
+variations of the bra and ket orbitals are linked by the biorthogonality
+constraints.
+This link can be utilized by
+introducing the projector onto the active single-particle space,
+\begin{align} \label{eq:P_proj_def}
+    P = \sum_{p}  \ket{\phiket{p}} \! \bra{\phibra{p}},
+\end{align}
+and the projector onto the complement of the active space
+(the secondary space),
+\begin{align} \label{eq:Q_proj_def}
+    Q = 1 - P.
+\end{align}
+We note that the secondary space need not, formally speaking, be finite dimensional.
+The precise nature of the secondary space is in some sense defined by
+the identity operator in Eq.~\eqref{eq:Q_proj_def}. Specifying what
+is meant by this operator uniquely specifies the secondary space;
+see e.g. Eq.~\eqref{eq:Q_proj_matrix}. By definition, we have
+\begin{align}
+    1 = P + Q
+\end{align}
+so that
+\begin{align}
+    \ket{\phiketvar{q}} 
+    &= (P + Q) \ket{\phiketvar{q}} \nn
+    &= \sum_{p}  \ket{\phiket{p}} \! \braket{{\phibra{p}} | \phiketvar{q}} + Q \ket{\phiketvar{q}} \nn
+    &\equiv \sum_{p} \ket{\phiket{p}} \epsilon_{pq} + \ket{\theta_q}.
+\end{align}
+For the bra orbitals we write
+\begin{align}
+    \bra{\phibravar{p}} 
+    &= \bra{\phibravar{p}} (P + Q) \nn
+    &= \sum_{q} \braket{\phibravar{p} | \phiket{q}} \! \bra{\phibra{q}}
+    + \bra{\phibravar{p}} Q  \nn
+    &\equiv
+    \sum_{q} (-\epsilon_{pq}) \bra{\phibra{q}} + \bra{\tilde{\theta}_p}.
+\end{align}
+We have now parameterized the allowed orbital
+variations
+in terms of the (arbitrary) scalars $\epsilon_{pq}$ 
+and the functions $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$,
+which satisfy
+$\ket{\theta_q} = Q \ket{\theta_q} $ and
+$\bra{\tilde{\theta}_p} = \bra{\tilde{\theta}_p} Q$, but are otherwise
+arbitrary. While the
+$P$-space variations are linked by
+the $\epsilon_{pq}$, we stress that the $Q$-space variations are completely independent.
 
+
+
+
+% The fact that
+% the variations are independent allows us to vary each variable separately
+% (rather than varying everything at once).
+
+
+\section{Further ideas}
 \begin{itemize}
     \item Ground state in exponential parameterization?
-    \item Detailed derivation (also vibrational case).
+    \item Detailed derivation of mean-field operators for vibrational case.
 \end{itemize}
 
 \newpage
