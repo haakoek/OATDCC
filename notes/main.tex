@@ -369,7 +369,7 @@ in agreement with Eqs.~\eqref{eq:F_check_from_u_and_rho} and \eqref{eq:F_check_c
 
 \section{Detailed derivation of orbital equations}
 \subsection{Biorthogonal case}
-This derivation follows the appendix of Ref.~\citenum{kvaalInitioQuantumDynamics2012}
+This derivation follows the supplementary material of Ref.~\citenum{kvaalInitioQuantumDynamics2012}
 quite closely, but explains the steps in more detail. We consider a complex
 action functional,
 \begin{align}
@@ -399,15 +399,14 @@ considering a single Slater determinant (in the spin-orbital basis):
 \end{align}
 Here, $N$ denotes the number of electrons. 
 We can think
-of $\mu$ as a set of integers that specifies
+of $\mu$ as a set of distinct integers that specify
 the occupied spin orbitals, i.e.
 \begin{align}
     \mu = (p^1, p^2, \ldots, p^N).
 \end{align}
 This is not an occupation number vector
 in the sense of Helgaker et al.,\cite{helgakerMolecularElectronicstructureTheory2000}
-but it contains the same information. The integers $p^k$
-are distinct, since we are working in the spin-orbital basis.
+but it contains the same information.
 The time-derivative of
 $\ket{\mu}$ is evaluated using the product rule:
 \begin{align}
@@ -450,10 +449,12 @@ We will also need the variation of bra and ket determinants, but since
 the (first-order) variation satisfies the product rule (Leibniz rule) just like
 the time derivative, the proofs are identical (the time derivative is, in fact,
 an allowed variation). The result is simply
-\begin{align}
-    \ket{\delta \mu}         &= \sum_{p} (\creavar{p}) \anni{p} \ket{\mu} \\
-    \bra{\delta \tilde{\mu}} &= \bra{\tilde{\mu}} \sum_{p} \crea{p} (\annivar{p}).
-\end{align}
+\begin{subequations} \label{eq:variation_of_mu_and_mu_tilde}
+    \begin{align}
+        \ket{\delta \mu}         &= \sum_{p} (\creavar{p}) \anni{p} \ket{\mu} \\
+        \bra{\delta \tilde{\mu}} &= \bra{\tilde{\mu}} \sum_{p} \crea{p} (\annivar{p}).
+    \end{align}
+\end{subequations}
 It is useful at this point to consider what the allowed
 orbital variations look like. The variations should be
 arbitrary under the constraint that they
@@ -486,22 +487,23 @@ and the projector onto the complement of the active space
     Q = 1 - P.
 \end{align}
 We note that the secondary space need not, formally speaking, be finite dimensional.
-The precise nature of the secondary space is in some sense defined by
-the identity operator in Eq.~\eqref{eq:Q_proj_def}. Specifying what
-is meant by this operator uniquely specifies the secondary space;
-see e.g. Eq.~\eqref{eq:Q_proj_matrix}. By definition, we have
+% The precise nature of the secondary space is in some sense defined by
+% the identity operator in Eq.~\eqref{eq:Q_proj_def}. Specifying what
+% is meant by this operator uniquely specifies the secondary space;
+% see e.g. Eq.~\eqref{eq:Q_proj_matrix}. 
+By definition, we have
 \begin{align}
     1 = P + Q
 \end{align}
 so that
-\begin{align}
+\begin{align} \label{eq:general_phiket_variation}
     \ket{\phiketvar{q}} 
     &= (P + Q) \ket{\phiketvar{q}} \nn
     &= \sum_{p}  \ket{\phiket{p}} \! \braket{{\phibra{p}} | \phiketvar{q}} + Q \ket{\phiketvar{q}} \nn
     &\equiv \sum_{p} \ket{\phiket{p}} \epsilon_{pq} + \ket{\theta_q}.
 \end{align}
 For the bra orbitals we write
-\begin{align}
+\begin{align} \label{eq:general_phibra_variation}
     \bra{\phibravar{p}} 
     &= \bra{\phibravar{p}} (P + Q) \nn
     &= \sum_{q} \braket{\phibravar{p} | \phiket{q}} \! \bra{\phibra{q}}
@@ -511,21 +513,51 @@ For the bra orbitals we write
 \end{align}
 We have now parameterized the allowed orbital
 variations
-in terms of the (arbitrary) scalars $\epsilon_{pq}$ 
-and the functions $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$,
+in terms of the arbitrary and independent scalars $\epsilon_{pq}$ 
+as well as the functions $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$,
 which satisfy
 $\ket{\theta_q} = Q \ket{\theta_q} $ and
 $\bra{\tilde{\theta}_p} = \bra{\tilde{\theta}_p} Q$, but are otherwise
 arbitrary. While the
 $P$-space variations are linked by
-the $\epsilon_{pq}$, we stress that the $Q$-space variations are completely independent.
+the $\epsilon_{pq}$, we stress that the $Q$-space variations $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$
+are completely independent from each other and from the $\epsilon_{pq}$. We are thus allowed
+to perform the variations in three stages: First, we consider the $P$-space variations
+by setting
+\begin{subequations} \label{eq:P_space_variations_pq}
+    \begin{align} 
+        \ket{\phiketvar{q}} &= \ket{\phiket{p}} \epsilon_{pq}, \\
+        \bra{\phibravar{p}} &= -\epsilon_{pq} \bra{\phibra{q}},
+    \end{align}
+\end{subequations}
+for each separate orbital pair $p,q$ (i.e. $\epsilon_{\bar{p} \bar{q}} = 0$ for $\bar{p}, \bar{q} \neq p, q$). Second, we perform the
+$Q$-space ket variations,
+\begin{align}
+    \ket{\phiketvar{q}} = \ket{\theta_q},    
+\end{align}
+and, finally, the $Q$-space bra variations,
+\begin{align}
+    \bra{\phibravar{p}} = \bra{\tilde{\theta}_p}.
+\end{align}
+The $Q$-space variations are done one orbital at a time (keeping all other orbitals fixed),
+just as the $P$-space variations are done one orbital pair at a time.
+Rather than using the first-quantized language of Eq.~\eqref{eq:P_space_variations_pq} we
+write
+\begin{subequations}
+    \begin{align}
+        \creavar{q} &= \crea{p} \epsilon_{pq}, \\
+        \annivar{p} &= -\epsilon_{pq} \anni{q}
+    \end{align}
+\end{subequations}
+and substitute this into Eq.~\eqref{eq:variation_of_mu_and_mu_tilde}:
+\begin{subequations} \label{eq:variation_of_mu_and_mu_tilde_pq}
+    \begin{gather}
+        \ket{\delta \mu}         = \epsilon_{pq} \, \crea{p} \anni{q} \ket{\mu}          = \epsilon_{pq} \,  \Eplain{p}{q} \ket{\mu}  , \\
+        \bra{\delta \tilde{\mu}} = -\epsilon_{pq} \bra{\tilde{\mu}} \crea{p} \anni{q}  = -\epsilon_{pq} \bra{\tilde{\mu}} \Eplain{p}{q} .
+    \end{gather}
+\end{subequations}
+So far, this result only holds for single determinants, which is not particularly useful.
 
-
-
-
-% The fact that
-% the variations are independent allows us to vary each variable separately
-% (rather than varying everything at once).
 
 
 \section{Further ideas}
