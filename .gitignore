@@ -18,3 +18,4 @@
 *.lb
 *.acr
 *Notes.bib
+__pycache__
