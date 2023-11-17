@@ -42,6 +42,26 @@ The Hamiltonian is written using physicist's notation for the integrals (which a
     = \elm{\phibra{p} \phibra{q}}{u}{\phiket{r} \phiket{s}}
     \equiv \iint \phibra{p}(\mathbf{x}) \phibra{q}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{r}(\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}}
 \end{align}
+Using Einstein notation, the non-symmetrized and anti-symmetrized two-electron integrals
+are related by
+\begin{align}
+    \tfrac{1}{2} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+    &= \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+    +  \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r} \nn
+    &= \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+    +  \tfrac{1}{4} u_{pqsr} \crea{p} \crea{q} \anni{r} \anni{s} \nn
+    &= \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
+    -  \tfrac{1}{4} u_{pqsr} \crea{p} \crea{q} \anni{s} \anni{r} \nn
+    &= \tfrac{1}{4}  (u_{pqrs} - u_{pqsr}) \crea{p} \crea{q} \anni{s} \anni{r} \nn
+    &\equiv \tfrac{1}{4}  w_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}.
+\end{align}
+The second step simply swaps summations indices $r$ and $s$ in the second
+term, and the third step uses the anti-commutator $\{\anni{r},  \anni{s} \} = 0$.
+Generally,
+\begin{align}
+    \sum_{rs} u_{pqrs} \anni{s} \anni{r} = \frac{1}{2} \sum_{rs} w_{pqrs} \anni{s} \anni{r}.
+\end{align}
+
 Density matrices are defined as
 \begin{align}
     \rho_{qp}   &= \elm{\tilde{\Psi}}{ \crea{p} \anni{q} }{\Psi}, \\
@@ -200,12 +220,14 @@ Those derivations also apply to the electronic structure problem
 (this is an explicit point in Ref.\citenum{hojlundBivariationalTimedependentWave2022}), so we
 should check that they agree with Eqs.~\eqref{eq:C_dot} and \eqref{eq:C_tilde_dot}.
 Ignoring notational differences, we need to check that
-\begin{align}
-    \big[ \check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}} \big]_{\bar{\alpha} \bar{p}}
-    &= \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi},  \label{eq:F_check_correspondence} \\
-    \big[ \mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' \big]_{\bar{p} \bar{\alpha}} 
-    &= \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}}  }{\Psi}.  \label{eq:F_check_prime_correspondence}
-\end{align}
+\begin{subequations} \label{eq:F_check_correspondence_ab}
+    \begin{align}
+        \big[ \check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}} \big]_{\bar{\alpha} \bar{p}}
+        &= \elm{\tilde{\Psi}}{ \crea{\bar{p}} [\anniprim{\bar{\alpha}}, H] }{\Psi},  \label{eq:F_check_correspondence} \\
+        \big[ \mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' \big]_{\bar{p} \bar{\alpha}} 
+        &= \elm{\tilde{\Psi}}{ [H, \creaprim{\bar{\alpha}}] \anni{\bar{p}}  }{\Psi}.  \label{eq:F_check_prime_correspondence}
+    \end{align}
+\end{subequations}
 Here, the operators $\creaprim{\bar{\alpha}}$ and $\anniprim{\bar{\alpha}}$ create and annihilate
 the primitive basis. We note that
 \begin{align}
@@ -366,6 +388,59 @@ of summation indices, one indeed finds that
 \end{align}
 in agreement with Eqs.~\eqref{eq:F_check_from_u_and_rho} and \eqref{eq:F_check_correspondence_orthogonal}.
 
+\subsection{Right-hand sides}
+
+% The NOCC states can be parameterized as
+% \begin{subequations}
+%     \begin{align}
+%         \ket{\Psi} 
+%         &= e^{\hat{\kappa}} \ket{\psi} \nn
+%         &= e^{\hat{\kappa}} e^{T} \ket{\Phi}, \\
+%         \bra{\tilde{\Psi}} 
+%         &= \bra{\tilde{\psi}} e^{-\hat{\kappa}} \nn
+%         &= \bra{\tilde{\Phi}} \Lambda e^{-T} e^{-\hat{\kappa}}.
+%     \end{align}
+% \end{subequations}
+% The appropriate energy function is
+% \begin{align}
+%     \mathcal{H} 
+%     = \elm{\tilde{\Psi}}{H}{\Psi} 
+%     = \elm{\tilde{\psi}}{ e^{-\hat{\kappa}} H e^{\hat{\kappa}} }{\psi}
+%     = \elm{\tilde{\psi}}{ \bar{H} }{\psi},
+% \end{align}
+% and equations for the parameters $z_i \in \{ t_\mu, \lambda_\mu, \kappa_{pq} \}$ are obtained from
+% \begin{align}
+%     \pdv{\mathcal{H}}{z_i} = 0.
+% \end{align}
+% At the point $\hat{\kappa} = 0$, the orbital gradient
+% takes on a particularly simple form, namely
+The right-hand sides of the $\bm{\eta}$ equations
+involve commutators like 
+\begin{align}
+       \elm{\tilde{\Psi}}{ [H, \crea{p} \anni{q}]   }{ \Psi }
+    &= \elm{\tilde{\Psi}}{ [H, \crea{p} ] \anni{q}  }{ \Psi }
+    +  \elm{\tilde{\Psi}}{ \crea{p} [H,  \anni{q} ] }{ \Psi } \nn
+    &= \elm{\tilde{\Psi}}{ [H, \crea{p} ] \anni{q}  }{ \Psi }
+    -  \elm{\tilde{\Psi}}{ \crea{p} [\anni{q}, H ]  }{ \Psi }.
+\end{align}
+Referring to Eqs.~\eqref{eq:F_check_correspondence_ab}, we find that
+\begin{subequations}
+    \begin{align}
+        \breve{F}_{qp} 
+        &\equiv \big[ \tilde{\mathbf{C}} (\check{\mathbf{H}} \mathbf{D} + \check{\mathbf{F}}) \big]_{q p} \nn
+        &= \elm{\tilde{\psi}}{ \crea{p} [\anni{q}, H] }{\psi},  \\
+        \breve{F}'_{qp} 
+        &\equiv\big[ (\mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' ) \mathbf{C} \big]_{q p} \nn
+        &= \elm{\tilde{\psi}}{ [H, \crea{p}] \anni{q}  }{\psi}.
+    \end{align}
+\end{subequations}
+The commutator can now be written as
+\begin{align}
+    \elm{\tilde{\Psi}}{ [H, \crea{p} \anni{q}] }{ \Psi } = \breve{F}_{qp} - \breve{F}'_{qp}.
+\end{align}
+The matrices $\breve{\mathbf{F}}$ and $\breve{\mathbf{F}}'$ are
+easily computed from quantities that are anyway needed for the
+orbital equations.
 
 \section{Detailed derivation of orbital equations}
 \subsection{Biorthogonal case}
