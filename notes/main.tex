@@ -42,9 +42,20 @@ The Hamiltonian is written using physicist's notation for the integrals (which a
     = \elm{\phibra{p} \phibra{q}}{u}{\phiket{r} \phiket{s}}
     \equiv \iint \phibra{p}(\mathbf{x}) \phibra{q}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{r}(\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}}
 \end{align}
+Density matrices are defined as
+\begin{align}
+    \rho_{qp}   &= \elm{\tilde{\Psi}}{ \crea{p} \anni{q} }{\Psi}, \\
+    \rho_{rspq} &= \elm{\tilde{\Psi}}{ \crea{p} \crea{q} \anni{s} \anni{r} }{\Psi}.
+\end{align}
+The two-electron integrals and densities have the following useful permutation symmetries:
+\begin{align}
+    u_{pqrs}    &= u_{qpsr}, \label{eq:u_permutation_symmetry}\\
+    \rho_{rspq} &= \rho_{srqp}.
+\end{align}
+
 Using Einstein notation, the non-symmetrized and anti-symmetrized two-electron integrals
 are related by
-\begin{align}
+\begin{align} \label{eq:antisymmetric_integrals_proof}
     \tfrac{1}{2} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
     &= \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r}
     +  \tfrac{1}{4} u_{pqrs} \crea{p} \crea{q} \anni{s} \anni{r} \nn
@@ -57,21 +68,26 @@ are related by
 \end{align}
 The second step simply swaps summations indices $r$ and $s$ in the second
 term, and the third step uses the anti-commutator $\{\anni{r},  \anni{s} \} = 0$.
-Generally,
+The anti-symmetrized integrals,
 \begin{align}
-    \sum_{rs} u_{pqrs} \anni{s} \anni{r} = \frac{1}{2} \sum_{rs} w_{pqrs} \anni{s} \anni{r}.
+    w_{pqrs} = u_{pqrs} - u_{pqsr} = u_{pqrs} - u_{qprs},
 \end{align}
+have the following symmetries:
+\begin{align}
+    w_{pqrs} = -w_{pqsr} = -w_{qprs} = w_{qpsr}.
+\end{align}
+% The first equality holds by construction, while the second follows from Eq.~\eqref{eq:u_permutation_symmetry}.
+Using the same kind of reasoning that led to Eq.~\eqref{eq:antisymmetric_integrals_proof}, 
+we can generally write
+\begin{subequations}
+    \begin{align}
+        \sum_{rs} u_{pqrs} \anni{s} \anni{r} &= \frac{1}{2} \sum_{rs} w_{pqrs} \anni{s} \anni{r} \\
+        \sum_{rs} u_{pqrs} \crea{s} \crea{r} &= \frac{1}{2} \sum_{rs} w_{pqrs} \crea{s} \crea{r} \\
+        \sum_{pq} u_{pqrs} \anni{p} \anni{q} &= \frac{1}{2} \sum_{pq} w_{pqrs} \anni{p} \anni{q} \\
+        \sum_{pq} u_{pqrs} \crea{p} \crea{q} &= \frac{1}{2} \sum_{pq} w_{pqrs} \crea{p} \crea{q}.
+    \end{align}
+\end{subequations}
 
-Density matrices are defined as
-\begin{align}
-    \rho_{qp}   &= \elm{\tilde{\Psi}}{ \crea{p} \anni{q} }{\Psi}, \\
-    \rho_{rspq} &= \elm{\tilde{\Psi}}{ \crea{p} \crea{q} \anni{s} \anni{r} }{\Psi}.
-\end{align}
-The two-electron integrals and densities have the following useful permutation symmetries:
-\begin{align}
-    u_{pqrs}    &= u_{qpsr}, \\
-    \rho_{rspq} &= \rho_{srqp}.
-\end{align}
 In the following, we use $o,p,q,r,s$ to index active orbitals. In coupled cluster
 theory, the active orbitals are additionally divided into reference/occupied orbitals ($i,j,\ldots$)
 and virtual orbitals ($a,b,\ldots$).
@@ -81,18 +97,20 @@ and virtual orbitals ($a,b,\ldots$).
 The orbital equations are formally identical for all orbital-adaptive methods.
 Following Kvaal\cite{kvaalInitioQuantumDynamics2012} and Sato\cite{satoCommunicationTimedependentOptimized2018}, 
 they take the appearance
-\begin{align}
-    i \ket{\phiketdot{p}} 
-    = i \sum_{q} \ket{\phiket{q}} \eta_{qp}
-    + Q \Big[
-    h \ket{\phiket{p}} + \sum_{oqrs} W_{rs} \ket{\phiket{q}} P_{qsor} \, (\mathbf{D}^{-1})_{op}
-    \Big], \label{eq:phiket_dot} \\
-    i \bra{\phibradot{p}} 
-    = -i \sum_{q} \eta_{pq} \bra{\phibra{q}} -
-    \Big[
-    \bra{\phibra{p}} h + \sum_{oqrs} (\mathbf{D}^{-1})_{po} \, P_{osqr}  \bra{\phibra{q}} W_{rs} 
-    \Big] Q. \label{eq:phibra_dot}
-\end{align}
+\begin{subequations}
+    \begin{align}
+        i \ket{\phiketdot{p}} 
+        = i \sum_{q} \ket{\phiket{q}} \eta_{qp}
+        + Q \Big[
+        h \ket{\phiket{p}} + \sum_{oqrs} W_{rs} \ket{\phiket{q}} P_{qsor} \, (\mathbf{D}^{-1})_{op}
+        \Big], \label{eq:phiket_dot} \\
+        i \bra{\phibradot{p}} 
+        = -i \sum_{q} \eta_{pq} \bra{\phibra{q}} -
+        \Big[
+        \bra{\phibra{p}} h + \sum_{oqrs} (\mathbf{D}^{-1})_{po} \, P_{osqr}  \bra{\phibra{q}} W_{rs} 
+        \Big] Q. \label{eq:phibra_dot}
+    \end{align}
+\end{subequations}
 The mean-field operator\cite{miyagiTimedependentRestrictedactivespaceSelfconsistentfield2013,satoTimedependentCompleteactivespaceSelfconsistentfield2013}
 $W_{rs}$ is a multiplicative/local operator given by
 \begin{align}
@@ -182,7 +200,8 @@ and half-transformed mean-field elements,
     &= \sum_{qrs}
     \iint \chibra{\beta} (\mathbf{x}) \phibra{r}(\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phiket{q} (\mathbf{x}) \phiket{s}(\mathbf{y}) \dd{\mathbf{x}} \dd{\mathbf{y}} 
     P_{qsor} \nn
-    &= \sum_{qrs}  u_{\beta r q s} P_{qsor}. \label{eq:F_check_from_u_and_rho}
+    &= \sum_{qrs}  u_{\beta r q s} P_{qsor} \nn
+    &= \frac{1}{2} \sum_{qrs}  w_{\beta r q s} P_{qsor}. \label{eq:F_check_from_u_and_rho}
 \end{align}
 Using similar steps, Eq.~\eqref{eq:phibra_dot} leads to
 \begin{align} \label{eq:C_tilde_dot}
@@ -193,12 +212,18 @@ Using similar steps, Eq.~\eqref{eq:phibra_dot} leads to
     \mathbf{D}^{-1} \big( \mathbf{D} \check{\mathbf{H}}' + \check{\mathbf{F}}' \big) \mathbf{Q}
 \end{align}
 with
-\begin{gather}
-    \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta},  \\
-    \check{F}'_{o \beta} = \sum_{qrs} P_{osqr} u_{qr\beta s}.\label{eq:F_check_prime_from_u_and_rho}
-\end{gather}
+\begin{subequations} \label{eq:F_check_prime_from_u_and_rho}
+    \begin{gather}
+        \check{H}'_{p \beta} = \elm{\phibra{p}}{h}{\chiket{\beta}} = h_{p \beta},  \\
+        \check{F}'_{o \beta} 
+        = \sum_{qrs} P_{osqr} \elm{\phibra{q}}{ W_{rs} }{\chiket{\beta}}
+        = \sum_{qrs} P_{osqr} u_{qr\beta s}
+        = \frac{1}{2} \sum_{qrs} P_{osqr} w_{qr\beta s}. \label{eq:F_check_prime_from_u_and_rho_b}
+    \end{gather}
+\end{subequations}
+
 When the active basis is orthogonal ($\tilde{\mathbf{C}} = \mathbf{C}^{\dagger}$), we gain a lot of
-additional structure, at least when the primitive basis is also taken to be orthogonal:
+additional structure (at least when the primitive basis is also taken to be orthogonal):
 \begin{gather}
     \mathbf{Q}^{\dagger}          = \mathbf{Q}, \quad 
     \mathbf{D}^{\dagger}          = \mathbf{D}, \quad 
@@ -510,19 +535,56 @@ The two factors of $(-1)^{l-1}$ cancel, leaving us with
     &= \sum_{l=1}^{N}  \creasuperdot{p}{l} \annisuper{p}{l}  \ket{\mu} \nn
     &= \sum_{p}        \creadot{p} \anni{p} \ket{\mu}.
 \end{align}
-In the last step we have added terms for each of the orbitals that are not present in $\ket{\mu}$. These terms vanish, since the annihilator
+In the last step we have added terms for each of the active orbitals that are not present in $\ket{\mu}$. 
+These terms vanish, since the annihilator
 $\anni{p}$ can be moved all the way to right for $p \notin \mu$. We now have an expression that does not refer to the specific orbitals
 in $\ket{\mu}$, so it must hold for all $\ket{\mu}$. We thus write
-\begin{align}
+\begin{align} \label{eq:time_derivative_ket_determinant}
     \ket{\dot{\mu}} = D \ket{\mu}, \quad D = \sum_{p} \creadot{p} \anni{p}
 \end{align}
 with the sum running over all active orbitals. For a bra Slater determinant, the same kind of proof yields
-\begin{align}
+\begin{align} \label{eq:time_derivative_bra_determinant}
     \bra{\dot{\tilde{\mu}}} = \bra{\tilde{\mu}} \sum_{p} \crea{p} \annidot{p}.
 \end{align}
+So far, these results only hold for single determinants, which is not particularly useful in itself.
+However, we can easily apply an active-space resolution of identity to the bra and ket states
+(or, indeed, any states contained in the active space) to get the following complete
+expansions:
+\begin{subequations} \label{eq:FCI_expansion}
+    \begin{alignat}{2}
+        \ket{\Psi} 
+        &= \sum_{\mu} \ket{\mu} \! \braket{\tilde{\mu} | \Psi} 
+        &&\equiv \sum_{\mu} c_{\mu} \ket{\mu}, \\
+        \bra{\tilde{\Psi}}
+        &= \sum_{\mu} \braket{\tilde{\Psi} | \mu} \! \bra{\tilde{\mu}}
+        &&\equiv  \sum_{\mu} \tilde{c}_{\mu} \bra{\tilde{\mu}}.
+    \end{alignat}
+\end{subequations}
+Given that the basis is biorthogonal, the coefficients $c_{\mu}$ and $\tilde{c}_{\mu}$ can be evaluated
+using only the fundamental anti-commutators (or, equivalently, Wick's theorem).
+They are consequently independent of the orbitals as such and depend only on the correlation parameters $\bm{\alpha}$.
+The time derivative term of the Lagrangian now reads
+\begin{align}
+    i \elm{\tilde{\Psi}}{ \partial_t }{\Psi}
+    &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \tfrac{\mathrm{d}}{\mathrm{d} t} c_{\mu} \ket{\mu} \right) \nn
+    &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \dot{c}_{\mu} \ket{\mu} + c_{\mu} \ket{\dot{\mu}}  \right) \nn
+    &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \sum_{j} \dot{\alpha}_j \pdv{c_\mu}{\alpha_j} \ket{\mu} + c_{\mu} D \ket{\mu}  \right) \nn
+    &= i \sum_{j} \dot{\alpha}_j \bigbraket{\tilde{\Psi}}{\pdv{\Psi}{\alpha_j}} + i \elm{\tilde{\Psi}}{ D }{\Psi},
+\end{align}
+and the full Lagrangian becomes
+\begin{align} \label{eq:Lagrangian_I_and_H_prime}
+    \mathcal{L} 
+    &= \elm{\tilde{\Psi}}{(i \partial_t - H)}{\Psi} \nn 
+    &= i \sum_{j} \dot{\alpha}_j \bigbraket{\tilde{\Psi}}{\pdv{\Psi}{\alpha_j}} 
+    - \elm{\tilde{\Psi}}{(H - iD)}{\Psi} \nn
+    &\equiv \mathcal{I} (\bm{\alpha}, \dot{\bm{\alpha}}) - \mathcal{H}'(\bm{\alpha}, \tilde{\bm{\varphi}}, \bm{\varphi}, \dot{\bm{\varphi}}).
+\end{align}
+
 We will also need the variation of bra and ket determinants, but since
 the (first-order) variation satisfies the product rule (Leibniz rule) just like
-the time derivative, the proofs are identical (the time derivative is, in fact,
+the time derivative, the proofs are identical to those leading to 
+Eqs.~\eqref{eq:time_derivative_ket_determinant} and \eqref{eq:time_derivative_bra_determinant}
+(the time derivative is, in fact,
 an allowed variation). The result is simply
 \begin{subequations} \label{eq:variation_of_mu_and_mu_tilde}
     \begin{align}
@@ -540,7 +602,7 @@ should be conserved:
     0 = \delta \braket{\phibra{p} | \phiket{q}} = 
     \braket{\phibravar{p} | \phiket{q}} + \braket{\phibra{p} | \phiketvar{q}}.
 \end{align}
-This is trivially satisfied if
+Thus,
 \begin{subequations} \label{eq:bra_ket_variation_link}
     \begin{align}
         \braket{\phibra{p} | \phiketvar{q}} &= +\epsilon_{pq} \\
@@ -575,7 +637,7 @@ so that
     \ket{\phiketvar{q}} 
     &= (P + Q) \ket{\phiketvar{q}} \nn
     &= \sum_{p}  \ket{\phiket{p}} \! \braket{{\phibra{p}} | \phiketvar{q}} + Q \ket{\phiketvar{q}} \nn
-    &\equiv \sum_{p} \ket{\phiket{p}} \epsilon_{pq} + \ket{\theta_q}.
+    &\equiv \sum_{p} \ket{\phiket{p}} \epsilon_{pq} + \ket{\omega_q}.
 \end{align}
 For the bra orbitals we write
 \begin{align} \label{eq:general_phibra_variation}
@@ -584,55 +646,245 @@ For the bra orbitals we write
     &= \sum_{q} \braket{\phibravar{p} | \phiket{q}} \! \bra{\phibra{q}}
     + \bra{\phibravar{p}} Q  \nn
     &\equiv
-    \sum_{q} (-\epsilon_{pq}) \bra{\phibra{q}} + \bra{\tilde{\theta}_p}.
+    \sum_{q} (-\epsilon_{pq}) \bra{\phibra{q}} + \bra{\tilde{\omega}_p}.
 \end{align}
 We have now parameterized the allowed orbital
 variations
 in terms of the arbitrary and independent scalars $\epsilon_{pq}$ 
-as well as the functions $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$,
+as well as the functions $\ket{\omega_q}$ and $\bra{\tilde{\omega}_p}$,
 which satisfy
-$\ket{\theta_q} = Q \ket{\theta_q} $ and
-$\bra{\tilde{\theta}_p} = \bra{\tilde{\theta}_p} Q$, but are otherwise
+$\ket{\omega_q} = Q \ket{\omega_q} $ and
+$\bra{\tilde{\omega}_p} = \bra{\tilde{\omega}_p} Q$, but are otherwise
 arbitrary. While the
 $P$-space variations are linked by
-the $\epsilon_{pq}$, we stress that the $Q$-space variations $\ket{\theta_q}$ and $\bra{\tilde{\theta}_p}$
+the $\epsilon_{pq}$, we stress that the $Q$-space variations $\ket{\omega_q}$ and $\bra{\tilde{\omega}_p}$
 are completely independent from each other and from the $\epsilon_{pq}$. We are thus allowed
-to perform the variations in three stages: First, we consider the $P$-space variations
-by setting
+to perform the $P$-space variations, the $Q$-space ket variations 
+and the $Q$-space bra variations separately.
+First, we consider the $P$-space variations by setting
 \begin{subequations} \label{eq:P_space_variations_pq}
     \begin{align} 
-        \ket{\phiketvar{q}} &= \ket{\phiket{p}} \epsilon_{pq}, \\
-        \bra{\phibravar{p}} &= -\epsilon_{pq} \bra{\phibra{q}},
+        \ket{\phiketvar{q}} &= \sum_{p} \ket{\phiket{p}} \epsilon_{pq}, \\
+        \bra{\phibravar{p}} &= \sum_{q} (-\epsilon_{pq}) \bra{\phibra{q}}.
     \end{align}
 \end{subequations}
-for each separate orbital pair $p,q$ (i.e. $\epsilon_{\bar{p} \bar{q}} = 0$ for $\bar{p}, \bar{q} \neq p, q$). Second, we perform the
-$Q$-space ket variations,
-\begin{align}
-    \ket{\phiketvar{q}} = \ket{\theta_q},    
-\end{align}
-and, finally, the $Q$-space bra variations,
-\begin{align}
-    \bra{\phibravar{p}} = \bra{\tilde{\theta}_p}.
-\end{align}
-The $Q$-space variations are done one orbital at a time (keeping all other orbitals fixed),
-just as the $P$-space variations are done one orbital pair at a time.
+% for each separate orbital pair $p,q$ (i.e. $\epsilon_{\bar{p} \bar{q}} = 0$ for $\bar{p}, \bar{q} \neq p, q$). 
+% just as the $P$-space variations are done one orbital pair at a time.
 Rather than using the first-quantized language of Eq.~\eqref{eq:P_space_variations_pq} we
 write
-\begin{subequations}
+\begin{subequations} \label{eq:P_space_variations_pq_SQ}
     \begin{align}
-        \creavar{q} &= \crea{p} \epsilon_{pq}, \\
-        \annivar{p} &= -\epsilon_{pq} \anni{q}
+        \creavar{q} &= \sum_{p} \crea{p} \epsilon_{pq}, \\
+        \annivar{p} &= \sum_{q} (-\epsilon_{pq}) \anni{q}
     \end{align}
 \end{subequations}
-and substitute this into Eq.~\eqref{eq:variation_of_mu_and_mu_tilde}:
+and substitute this into Eqs.~\eqref{eq:variation_of_mu_and_mu_tilde}:
 \begin{subequations} \label{eq:variation_of_mu_and_mu_tilde_pq}
     \begin{gather}
-        \ket{\delta \mu}         = \epsilon_{pq} \, \crea{p} \anni{q} \ket{\mu}          = \epsilon_{pq} \,  \Eplain{p}{q} \ket{\mu}  , \\
-        \bra{\delta \tilde{\mu}} = -\epsilon_{pq} \bra{\tilde{\mu}} \crea{p} \anni{q}  = -\epsilon_{pq} \bra{\tilde{\mu}} \Eplain{p}{q} .
+        \ket{\delta \mu} 
+        = \sum_{pq} \epsilon_{pq} \, \crea{p} \anni{q} \ket{\mu}          
+        = \sum_{pq} \epsilon_{pq} \, \Eplain{p}{q} \ket{\mu}  , \\
+        \bra{\delta \tilde{\mu}} 
+        = \sum_{pq} (-\epsilon_{pq}) \bra{\tilde{\mu}} \crea{p} \anni{q}  
+        = \sum_{pq} (-\epsilon_{pq}) \bra{\tilde{\mu}} \Eplain{p}{q} .
     \end{gather}
 \end{subequations}
-So far, this result only holds for single determinants, which is not particularly useful.
+Now, the $\epsilon_{pq}$ are independent and arbitrary, so 
+we could choose a single index pair $\bar{p}, \bar{q}$ 
+and set $\epsilon_{pq} = 0$ for $p,q \neq \bar{p}, \bar{q}$. Repeating
+this for all pairs $\bar{p}, \bar{q}$ covers all allowed $P$-space variations and
+yields the correct result (indeed, this is the approach taken by Kvaal\cite{kvaalInitioQuantumDynamics2012}).
+We will, however, keep the summation over $p,q$ since this allows easy translation
+to the orthogonal case where the $\epsilon_{pq}$ are not all independent.
 
+As it stands, Eqs.~\eqref{eq:variation_of_mu_and_mu_tilde_pq} holds for single determinants. In order to get results that hold for the bra and ket states
+(or, indeed, any states contained in the active space) we use the expansions in
+Eqs.~\eqref{eq:FCI_expansion} and apply Eqs.~\eqref{eq:variation_of_mu_and_mu_tilde_pq} to each determinant in the sums.
+This yields
+\begin{subequations} \label{eq:variation_of_Psi_and_Psi_tilde_pq}
+    \begin{gather}
+        \ket{\delta \Psi}         = \sum_{pq} \epsilon_{pq} \,  \Eplain{p}{q} \ket{\Psi}  , \\
+        \bra{\delta \tilde{\Psi}} = \sum_{pq} (-\epsilon_{pq}) \bra{\tilde{\Psi}} \Eplain{p}{q}
+    \end{gather}
+\end{subequations}
+for orbital variations of the form given by Eqs.~\eqref{eq:P_space_variations_pq_SQ}.
+Generally, we have
+\begin{align}
+    \delta \elm{\tilde{\Psi}}{A}{\Psi}
+    &= \elm{\delta \tilde{\Psi}}{A}{\Psi} + \elm{\tilde{\Psi}}{A}{\delta \Psi} + \elm{\tilde{\Psi}}{(\delta A)}{\Psi} \nn
+    &= \sum_{pq} \epsilon_{pq} \elm{\tilde{\Psi}}{[A, \Eplain{p}{q}] }{\Psi} + \elm{\tilde{\Psi}}{(\delta A)}{\Psi},
+\end{align}
+where $A$ is any operator that may depend on the orbitals. The Hamiltonian as such does not depend on
+the orbitals, while
+\begin{align}
+    \delta D 
+    &= \delta \sum_{r} \creadot{r} \anni{r} \nn
+    &= \sum_{q} (\delta \creadot{q}) \anni{q} + \sum_{p} \creadot{p} (\annivar{p}) \nn
+    &= \sum_{q} (\tfrac{\mathrm{d}}{\mathrm{d} t} \creavar{q}) \anni{q} + \sum_{p} \creadot{p} (\annivar{p}) \nn
+    &= \sum_{pq} (\tfrac{\mathrm{d}}{\mathrm{d} t} \crea{p} \epsilon_{pq}) \anni{q} + \sum_{pq} \creadot{p} (-\epsilon_{pq}) \anni{q} \nn
+    &= \sum_{pq} \left( \dot{\epsilon}_{pq} \crea{p} \anni{q} + \epsilon_{pq} \creadot{p} \anni{q} - \epsilon_{pq} \creadot{p} \anni{q}  \right) \nn
+    % % &= \sum_{r} \big[ (\delta \creadot{r}) \anni{r} + \creadot{r} (\annivar{r}) \big] \nn
+    % &= \sum_{r} \Big[ \! \left(\tfrac{\mathrm{d}}{\mathrm{d} t} \creavar{r} \right) \anni{r} + \creadot{r} (\annivar{r}) \Big] \nn
+    % &= \left(\tfrac{\mathrm{d}}{\mathrm{d} t} \crea{p} \epsilon_{pq} \right) \anni{q} + \creadot{p} \anni{q} (-\epsilon_{pq}) \nn
+    % &= \left( \dot{\epsilon}_{pq} \crea{p} \anni{q} + \epsilon_{pq} \creadot{p} \anni{q} \right) - \epsilon_{pq} \creadot{p} \anni{q} \nn
+    &= \sum_{pq} \dot{\epsilon}_{pq} \crea{p} \anni{q} \nn
+    &= \sum_{pq} \dot{\epsilon}_{pq} \Eplain{p}{q}.
+\end{align}
+We have used the fact that time derivatives and first-order variations commute.
+Noting that the function $\mathcal{I}$ in Eq.~\eqref{eq:Lagrangian_I_and_H_prime} does not depend on the orbitals,
+we compute the variation in $\mathcal{S}$ as
+\begin{align}
+    \delta{S} 
+    &= \int_{t_0}^{t_1} \delta \elm{\tilde{\Psi}}{(iD - H)}{\Psi} \dd{t} \nn
+    &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \elm{\tilde{\Psi}}{(\delta D)}{\Psi} \right) \dd{t} \nn 
+    &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \dot{\epsilon}_{pq} \elm{\tilde{\Psi}}{\Eplain{p}{q}}{\Psi} \right) \dd{t} \nn 
+    &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \dot{\epsilon}_{pq} \rho_{qp} \right) \dd{t} \nn 
+    &= \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq} \left( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \right) \dd{t}, 
+\end{align}
+where we have used integration by parts on the second term (the boundary term vanishes since the variations are fixed at $t_0$ and $t_1$).
+Requiring $\delta S = 0$ for arbitrary $\epsilon_{pq}$ implies
+\begin{align}
+    \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} = i \dot{\rho}_{qp}
+\end{align}
+for each index pair $p,q$.
+The operator $D$ appears inside a matrix element, so we are free to
+substitute
+\begin{align}
+    D \rightarrow D_0 
+    = \Pi D \Pi 
+    = \sum_{rs} \braket{\phibra{r} | \phiketdot{s}} \Eplain{r}{s}
+    = \sum_{rs} \eta_{rs} \Eplain{r}{s}.
+\end{align}
+This yields a set of linear equations for the $\eta_{rs}$:
+\begin{align}
+    i \sum_{rs} \elm{\tilde{\Psi}}{[\Eplain{r}{s}, \Eplain{p}{q}]}{\Psi} \eta_{rs} = i \dot{\rho}_{qp} + \elm{\tilde{\Psi}}{[H, E_{pq}]}{\Psi}.
+\end{align}
+We now turn to the $Q$-space variations. For this purpose,
+it is convenient to write the Lagrangian as
+\begin{align} \label{eq:Lagrangian_for_Q_space_variation}
+    \mathcal{L} 
+    &= \mathcal{I} + \elm{\tilde{\Psi}}{(iD - H)}{\Psi} \nn
+    &= \mathcal{I} + \sum_{pq} (i \eta_{pq} - h_{pq}) \rho_{qp} - \frac{1}{2} \sum_{pqrs} u_{pqrs} \rho_{rspq} \nn
+    &= \mathcal{I} +
+    \sum_{pq} \elm{\phibra{p}}{(i \partial_t - h)}{\phiket{q}} \rho_{qp} 
+    - \frac{1}{2} \sum_{pqrs} \elm{\phibra{p} \phibra{q}}{u}{\phiket{r} \phiket{s}} \rho_{rspq}.
+\end{align}
+We start by varying a single bra orbital, i.e.
+\begin{subequations}
+    \begin{gather}
+        \bra{\phibravar{\bar{p}}} = \bra{\tilde{\omega}_{\bar{p}}} = \bra{\tilde{\omega}_{\bar{p}}} Q, \\
+        \bra{\phibravar{p}} = 0, \quad p \neq \bar{p}.
+    \end{gather}
+\end{subequations}
+The densities and the functional $\mathcal{I}$ can be evaluated using the anti-commutation relations (or Wick's theorem), so they do not
+depend on the orbitals. The variation of the action thus reads
+\begin{align}
+    \delta S 
+    &= 
+    \begin{multlined}[t]
+        \int_{t_0}^{t_1}
+        \bigg[
+            \sum_{pq} \elm{\phibravar{p}}{(i \partial_t - h)}{\phiket{q}} \rho_{qp} 
+            - \frac{1}{2} \sum_{pqrs} \elm{(\phibravar{p}) \phibra{q}}{u}{\phiket{r} \phiket{s}} \rho_{rspq}  \\
+            - \frac{1}{2} \sum_{pqrs} \elm{\phibra{q} (\phibravar{p})}{u}{\phiket{s} \phiket{r}} \rho_{srqp} \,
+        \bigg] \dd{t} 
+    \end{multlined} \nn
+    &= 
+    \begin{multlined}[t]
+        \int_{t_0}^{t_1}
+        \bigg[
+            \sum_{q} \elm{\tilde{\omega}_{\bar{p}}}{(i \partial_t - h)}{\phiket{q}} \rho_{q\bar{p}} 
+            - \frac{1}{2} \sum_{qrs} \elm{\tilde{\omega}_{\bar{p}} \, \phibra{q}}{u}{\phiket{r} \phiket{s}} \rho_{rs\bar{p}q} \\
+            - \frac{1}{2} \sum_{qrs} \elm{\phibra{q} \, \tilde{\omega}_{\bar{p}}}{u}{\phiket{s} \phiket{r}} \rho_{srq\bar{p}} \,
+        \bigg] \dd{t} 
+    \end{multlined} \nn
+    &=
+    \int_{t_0}^{t_1}
+    \bigg[
+        \sum_{q} \elm{\tilde{\omega}_{\bar{p}}}{(i \partial_t - h)}{\phiket{q}} \rho_{q\bar{p}}
+        - \sum_{qrs} \elm{\tilde{\omega}_{\bar{p}} \, \phibra{q}}{u}{\phiket{r} \phiket{s}} \rho_{rs\bar{p}q}
+    \bigg] \dd{t} \nn
+    &=
+    \int_{t_0}^{t_1}
+    \bigg[
+        \sum_{q} \elm{\tilde{\omega}_{\bar{p}}}{(i \partial_t - h)}{\phiket{q}} \rho_{q\bar{p}}
+        - \sum_{qrs} \elm{\tilde{\omega}_{\bar{p}}}{ W_{qs} }{\phiket{r}} \rho_{rs\bar{p}q}
+    \bigg] \dd{t}.
+\end{align}
+The mean-field operator is defined through
+\begin{align}
+    \elm{\tilde{\omega}_{\bar{p}}}{ W_{qs} }{\phiket{r}}
+    &= \int \tilde{\omega}_{\bar{p}} (\mathbf{x}) W_{qs} (\mathbf{x}) \phiket{r} (\mathbf{x}) \dd{\mathbf{x}} \nn
+    &= \int \tilde{\omega}_{\bar{p}} (\mathbf{x}) 
+    \left[\int \phibra{q} (\mathbf{y}) u(\mathbf{x}, \mathbf{y}) \phibra{s} (\mathbf{y}) \dd{\mathbf{y}}\right]
+    \phiket{r} (\mathbf{x}) \dd{\mathbf{x}} \nn 
+    &= \int \int 
+    \tilde{\omega}_{\bar{p}} (\mathbf{x}) 
+    \phibra{q} (\mathbf{y}) 
+    u(\mathbf{x}, \mathbf{y}) 
+    \phiket{r} (\mathbf{x}) 
+    \phibra{s} (\mathbf{y})
+    \dd{\mathbf{x}} \dd{\mathbf{y}} \nn
+    &= \elm{\tilde{\omega}_{\bar{p}} \, \phibra{q}}{u}{\phiket{r} \phiket{s}}.
+\end{align}
+The function $\bra{\tilde{\omega}_{\bar{p}}} = \bra{\tilde{\omega}_{\bar{p}}} Q$ is
+arbitrary so $\delta S = 0$ if and only if
+\begin{align}
+    \sum_{q} Q (i \partial_t - h) \ket{\phiket{q}} \rho_{q\bar{p}}
+    = \sum_{qrs} Q W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q}
+\end{align}
+or, equivalently,
+\begin{align}
+    i Q \sum_{q} \ket{\phiketdot{q}} \rho_{q\bar{p}}
+    = 
+    Q \bigg[ \sum_{q} h \ket{\phiket{q}} \rho_{q\bar{p}}
+    + \sum_{qrs} W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q} \bigg].
+\end{align}
+Taking the one-bode density to be invertible, we finally get
+\begin{align}
+    i Q \ket{\phiketdot{p}}
+    = 
+    Q \bigg[ h \ket{\phiket{p}}
+    + \sum_{pqrs} W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q} \, (\bm{\rho}^{-1})_{\bar{p}p} \bigg],
+\end{align}
+which agrees with the $Q$-space term of Eq.~\eqref{eq:phiket_dot} after renaming summation indices.
+The $Q$-space term of Eq.~\eqref{eq:phibra_dot} is derived in a very similar manner by setting
+\begin{subequations}
+    \begin{gather}
+        \ket{\phiketvar{\bar{r}}} = \ket{\omega_{\bar{r}}} = Q \ket{\omega_{\bar{r}}}, \\
+        \ket{\phiketvar{r}}  = 0, \quad r \neq \bar{r}.
+    \end{gather}
+\end{subequations}
+When doing the derivation, one needs to use integration by parts 
+to move the time derivative in Eq.~\eqref{eq:Lagrangian_for_Q_space_variation}
+to the bra side. Apart from this, the steps are almost identical.
+
+
+\subsection{Orthogonal case}
+When the active basis is orthogonal we write $\bra{\phibra{p}} = \bra{\phiket{p}}$
+and $\braket{\phiket{p} | \phiket{q}} = \delta_{pq}$. In order for this overlap
+to be conserved we must have
+% \begin{alignat}
+%     0 
+%     &= \delta \braket{\phiket{p} | \phiket{q}} 
+%     &&= \braket{\delta \phiket{p} | \phiket{q}}
+%     + \braket{\phiket{p} | \delta \phiket{q}} \\
+%     0 
+%     &= \dv{t} \braket{\phiket{p} | \phiket{q}} 
+%     &&= \braket{\phiketdot{p} | \phiket{q}}
+%     + \braket{\phiket{p} | \phiketdot{q}} 
+% \end{alignat}
+
+% Second, we perform the
+% $Q$-space ket variations,
+% \begin{align}
+%     \ket{\phiketvar{q}} = \ket{\omega_q},    
+% \end{align}
+% and, finally, the $Q$-space bra variations,
+% \begin{align}
+%     \bra{\phibravar{p}} = \bra{\tilde{\omega}_p}.
+% \end{align}
+% The $Q$-space variations are done one orbital at a time (keeping all other orbitals fixed).
 
 
 \section{Further ideas}
