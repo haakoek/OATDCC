@@ -17,5 +17,6 @@
 *.synctex.gz
 *.lb
 *.acr
+*.vscode
 *Notes.bib
 __pycache__

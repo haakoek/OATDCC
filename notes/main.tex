@@ -566,7 +566,7 @@ They are consequently independent of the orbitals as such and depend only on the
 The time derivative term of the Lagrangian now reads
 \begin{align}
     i \elm{\tilde{\Psi}}{ \partial_t }{\Psi}
-    &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \tfrac{\mathrm{d}}{\mathrm{d} t} c_{\mu} \ket{\mu} \right) \nn
+    &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \smallddt c_{\mu} \ket{\mu} \right) \nn
     &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \dot{c}_{\mu} \ket{\mu} + c_{\mu} \ket{\dot{\mu}}  \right) \nn
     &= i \sum_{\mu} \bra{\tilde{\Psi}} \left( \sum_{j} \dot{\alpha}_j \pdv{c_\mu}{\alpha_j} \ket{\mu} + c_{\mu} D \ket{\mu}  \right) \nn
     &= i \sum_{j} \dot{\alpha}_j \bigbraket{\tilde{\Psi}}{\pdv{\Psi}{\alpha_j}} + i \elm{\tilde{\Psi}}{ D }{\Psi},
@@ -739,7 +739,7 @@ we compute the variation in $\mathcal{S}$ as
     &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \elm{\tilde{\Psi}}{(\delta D)}{\Psi} \right) \dd{t} \nn 
     &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \dot{\epsilon}_{pq} \elm{\tilde{\Psi}}{\Eplain{p}{q}}{\Psi} \right) \dd{t} \nn 
     &= \sum_{pq} \int_{t_0}^{t_1} \left( \epsilon_{pq} \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} + i \dot{\epsilon}_{pq} \rho_{qp} \right) \dd{t} \nn 
-    &= \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq} \left( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \right) \dd{t}, 
+    &= \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq} \left( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \right) \dd{t},  \label{eq:P_space_variation_biorthogonal}
 \end{align}
 where we have used integration by parts on the second term (the boundary term vanishes since the variations are fixed at $t_0$ and $t_1$).
 Requiring $\delta S = 0$ for arbitrary $\epsilon_{pq}$ implies
@@ -864,16 +864,230 @@ to the bra side. Apart from this, the steps are almost identical.
 When the active basis is orthogonal we write $\bra{\phibra{p}} = \bra{\phiket{p}}$
 and $\braket{\phiket{p} | \phiket{q}} = \delta_{pq}$. In order for this overlap
 to be conserved we must have
-% \begin{alignat}
-%     0 
-%     &= \delta \braket{\phiket{p} | \phiket{q}} 
-%     &&= \braket{\delta \phiket{p} | \phiket{q}}
-%     + \braket{\phiket{p} | \delta \phiket{q}} \\
-%     0 
-%     &= \dv{t} \braket{\phiket{p} | \phiket{q}} 
-%     &&= \braket{\phiketdot{p} | \phiket{q}}
-%     + \braket{\phiket{p} | \phiketdot{q}} 
+\begin{subequations}
+    \begin{gather}
+        0 
+        = \delta \braket{\phiket{p} | \phiket{q}} 
+        = \braket{\delta \phiket{p} | \phiket{q}}
+        + \braket{\phiket{p} | \delta \phiket{q}}, \\
+        0 
+        = \smallddt \braket{\phiket{p} | \phiket{q}} 
+        = \braket{\phiketdot{p} | \phiket{q}}
+        + \braket{\phiket{p} | \phiketdot{q}}.
+    \end{gather}
+\end{subequations}
+As in the biorthogonal case, this implies
+\begin{subequations}
+    \begin{align}
+        \braket{\phiket{p} | \delta \phiket{q}} &= +\epsilon_{pq}, \\
+        \braket{\delta \phiket{p} | \phiket{q}} &= -\epsilon_{pq}
+    \end{align}
+\end{subequations}
+for the variation and
+\begin{subequations}
+    \begin{align}
+        \braket{\phiket{p} | \phiketdot{q}} &= +\eta_{pq}, \\
+        \braket{\phiketdot{p} | \phiket{q}} &= -\eta_{pq}
+    \end{align}
+\end{subequations}
+for the time derivative. In addition, orthogonality implies
+\begin{subequations}
+    \begin{align}
+        \epsilon_{pq}^{*} = -\epsilon_{qp}, \\
+        \eta_{pq}^{*}     = -\eta_{qp},
+    \end{align}
+\end{subequations}
+so that $\bm{\epsilon}$ and $\bm{\eta}$ are anti-Hermitian (skew-Hermitian) matrices.
+Specifically, the scalars $\epsilon_{pq}$ and $\eta_{pq}$ are not all independent.
+
+A parameterization based on orthogonal orbitals is not holomorphic (complex analytic)
+since it involves complex conjugation (which is not a holomorphic mapping):
+The bra orbitals are simply the complex conjugate of the ket orbitals. This is
+not consistent with the use of a complex-valued action, as mentioned by Kvaal.\cite{kvaalInitioQuantumDynamics2012} 
+Instead, we must resort to the real part of the action functional:
+\begin{align}
+    \mathrm{Re}(\mathcal{S}) = \tfrac{1}{2} (\mathcal{S} + \mathcal{S}^*).
+\end{align}
+Generally speaking, $\mathcal{S}$ and $\mathrm{Re}(\mathcal{S})$ depend on a set of
+complex scalars (correlation parameters) and a set of complex functions (orbitals).
+We are free to consider the real and imaginary parts separately, so that the independent parameters are
+$\mathbf{x}$ and $\mathbf{y}$. Alternatively, we can take $\mathbf{z} = \mathbf{x} + i \mathbf{y}$ 
+and $\mathbf{z}^* = \mathbf{x} - i \mathbf{y}$ as the independent parameters.
+
+If we perform the variation with respect to $\mathbf{z}$
+we get
+\begin{align}
+    \delta_{\mathbf{z}} \mathrm{Re}(\mathcal{S}) 
+    = \tfrac{1}{2} (\delta_{\mathbf{z}} \mathcal{S} + \delta_{\mathbf{z}} (\mathcal{S}^*))
+    = \tfrac{1}{2} (\delta_{\mathbf{z}} \mathcal{S} + (\delta_{\mathbf{z}^*} \mathcal{S})^*).
+\end{align}
+If the bra and ket states are holomorphic in $\mathbf{z}$, then
+$\mathcal{S}$ has no dependence on $\mathbf{z}^*$ and $\delta_{\mathbf{z}^*} \mathcal{S} = 0$.
+In that case, the real-action bivariational principle simplifies to the complex-action principle.
+(this happens, e.g., for the amplitudes in ordinary and extended coupled cluster). In contrast,
+$\mathcal{S}$ is non-holomorphic in the orbitals, so such a reduction does not occur in the orbital equations.
+Note that the variation with respect to $\mathbf{z}^*$ is
+\begin{align}
+    \delta_{\mathbf{z}^*} \mathrm{Re}(\mathcal{S}) 
+    = \tfrac{1}{2} (\delta_{\mathbf{z}^*} \mathcal{S} + \delta_{\mathbf{z}^*} (\mathcal{S}^*))
+    = \tfrac{1}{2} (\delta_{\mathbf{z}^*} \mathcal{S} + (\delta_{\mathbf{z}} \mathcal{S})^*)
+    = (\delta_{\mathbf{z}} \mathrm{Re}(\mathcal{S}))^*,
+\end{align}
+i.e. the complex conjugate of the variation with respect to $\mathbf{z}$. This ensures
+that variations with respect to $\mathbf{z}$ and $\mathbf{z}^*$ yield the same equations,
+as they should. Although this seems like an obvious thing, it only happens because the
+action is real. 
+
+We have seen that $P$-space orbital variations are linked by the biorthogonality constraint
+meaning we should vary $\bm{\varphi}$ and $\bm{\varphi}^*$ at the same time
+(as in the biorthogonal case, these variations are parameterized by the scalars $\epsilon_{pq}$).
+More generally, we can consider what happens when we vary $\mathbf{z}$ and $\mathbf{z}^*$ at
+the same time (this is always allowed, but usually not required, unless there are
+some additional constraints):
+\begin{align}
+    \delta_{\mathbf{z},\mathbf{z}^*} \mathrm{Re}(\mathcal{S}) 
+    = \tfrac{1}{2} (\delta_{\mathbf{z},\mathbf{z}^*} \mathcal{S} + \delta_{\mathbf{z},\mathbf{z}^*} (\mathcal{S}^*))
+    = \tfrac{1}{2} (\delta_{\mathbf{z},\mathbf{z}^*} \mathcal{S} + (\delta_{\mathbf{z},\mathbf{z}^*} \mathcal{S})^*)
+    = \mathrm{Re}(\delta_{\mathbf{z}, \mathbf{z}^*}  \mathcal{S}).
+\end{align}
+This is useful since the computation of $\delta_{\bm{\varphi}, \bm{\varphi}^*}  \mathcal{S}$
+is exactly analogous to that of $\delta_{\bm{\varphi}, \tilde{\bm{\varphi}}}  \mathcal{S}$.
+We can, in other words, simply take the real part of Eq.~\eqref{eq:P_space_variation_biorthogonal}
+(it is, of course, also possible to derive the variation explicitly at the expense of a few extra steps).
+Dropping the subscripts on $\delta_{\bm{\varphi}, \bm{\varphi}^*}$ and defining
+\begin{align}
+    X_{qp} = \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp},
+\end{align}
+this reads as
+\begin{align}
+    2 \delta \mathrm{Re}(\mathcal{S}) 
+    &= \sum_{pq} \int_{t_0}^{t_1}  (\epsilon_{pq} X_{qp} + \epsilon_{pq}^* X_{qp}^* ) \dd{t} \nn
+    &= \sum_{pq} \int_{t_0}^{t_1}  (\epsilon_{pq} X_{qp} + \epsilon_{qp}^* X_{pq}^* ) \dd{t} \nn
+    &= \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq} ( X_{qp} - X_{pq}^* ) \dd{t},
+\end{align}
+where we have simply renamed summation indices and used $\epsilon_{qp}^* = - \epsilon_{pq}$.
+We conclude that the orbital equations for the orthogonal case are
+\begin{align}
+    X_{qp} - X_{pq}^* = 0 \qqtext{or} \mathbb{A}(\mathbf{X}) = 0,
+\end{align}
+where $\mathbb{A}(\,\cdot\,)$ denotes the anti-Hermitian part.
+Writing the equations in more detail, we get
+\begin{gather}
+    % \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - \elm{\tilde{\Psi}}{[iD - H, E_{qp}]}{\Psi}^*
+    % = i (\rho_{qp} + \rho_{pq}^*) \nn
+    \elm{\tilde{\Psi}}{[iD, E_{pq}]}{\Psi} - \elm{\tilde{\Psi}}{[iD, E_{qp}]}{\Psi}^*
+    = \elm{\tilde{\Psi}}{[H, E_{pq}]}{\Psi} - \elm{\tilde{\Psi}}{[H, E_{qp}]}{\Psi}^*
+    + i (\dot{\rho}_{qp} + \dot{\rho}_{pq}^*).  \nonumber
+\end{gather}
+Expanding the operator $D$ and defining
+\begin{align}
+    f_{pq} = \elm{\tilde{\Psi}}{[H, E_{pq}]}{\Psi}
+\end{align}
+then leads to
+\begin{align}
+    \sum_{rs} \Big(
+        i\elm{\tilde{\Psi}}{[E_{rs}, E_{pq}]}{\Psi}     \eta_{rs}
+       +i\elm{\tilde{\Psi}}{[E_{rs}, E_{pq}]}{\Psi}^* \,\eta_{rs}^*
+    \Big)
+    = 
+    (f_{pq} - f_{qp}^*) + i (\dot{\rho}_{qp} + \dot{\rho}_{pq}^*), \\
+    i \sum_{rs} \Big(
+        \elm{\tilde{\Psi}}{[E_{rs}, E_{pq}]}{\Psi} 
+    -   \elm{\tilde{\Psi}}{[E_{sr}, E_{pq}]}{\Psi}^*
+    \Big) \eta_{rs}
+    = 
+    (f_{pq} - f_{qp}^*) + i (\dot{\rho}_{qp} + \dot{\rho}_{pq}^*).
+\end{align}
+The second line simple uses $\eta_{rs}^* = -\eta_{sr}$ followed by renaming of summation indices.
+The right-hand side involves the time derivative of the one-electron density matrix,
+which depends on the $\eta_{rs}$:
+\begin{align}
+    i\dot{\rho}_{qp} 
+    &= \sum_{i}  {\pdv{\rho_{qp}}{\alpha_i}} (i\dot{\alpha_i}) \nn
+    &= \sum_{ij} {\pdv{\rho_{qp}}{\alpha_i}} (\mathbf{M}^{-1})_{ij} \pdv{\mathcal{H}'}{\alpha_j}.
+\end{align}
+The matrix $\mathbf{M}$ has elements
+\begin{align}
+    M_{ij} = \bigbraket{\pdv{\tilde{\Psi}}{\alpha_i}}{\pdv{\Psi}{\alpha_j}}
+    - \bigbraket{\pdv{\tilde{\Psi}}{\alpha_j}}{\pdv{\Psi}{\alpha_i}}.
+\end{align}
+We now define
+\begin{align}
+    A_{i(pq)} = {\pdv{\rho_{qp}}{\alpha_i}} = \pdv{}{\alpha_j}  \elm{\tilde{\Psi}}{E_{pq}}{\Psi}, \quad
+    h_j = \pdv{\mathcal{H}}{\alpha_j}
+\end{align}
+and compute
+\begin{align}
+    \pdv{\mathcal{H}'}{\alpha_j} 
+    &= \pdv{}{\alpha_j} \elm{\tilde{\Psi}}{(H - iD)}{\Psi}  \nn
+    &= h_j - i \sum_{rs} \pdv{}{\alpha_j}  \elm{\tilde{\Psi}}{E_{rs}}{\Psi} \eta_{rs} \nn
+    &= h_j - i \sum_{rs} A_{j(rs)} \eta_{rs}
+\end{align}
+so that
+\begin{align}
+    i\dot{\rho}_{qp} = \sum_{ij}
+    A_{i(pq)} (\mathbf{M}^{-1})_{ij}
+    \Big(
+        h_j - i \sum_{rs} A_{j(rs)} \eta_{rs}
+    \Big).
+\end{align}
+
+
+
+
+
+% \begin{alignat}{4}  \label{eq:P_space_variation_orthogonal}
+%     2 \delta \mathrm{Re}(\mathcal{S}) 
+%     = &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi}   && {}-{} &&(i \dot{\rho}_{qp})   &&\Big) \dd{t} \nn
+%     + &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}^* \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi}^* && {}-{} &&(i \dot{\rho}_{qp})^* &&\Big) \dd{t}, 
 % \end{alignat}
+% \begin{alignat}{2}  \label{eq:P_space_variation_orthogonal}
+%     2 \delta \mathrm{Re}(\mathcal{S}) 
+%     = &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \Big)       &&\dd{t} \nn
+%     + &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}^* \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \Big)^{\!*} &&\dd{t} \nn
+%     %%%
+%     = &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \Big)       &&\dd{t} \nn
+%     + &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{qp}^* \Big( \elm{\tilde{\Psi}}{[iD - H, E_{qp}]}{\Psi} - i \dot{\rho}_{pq} \Big)^{\!*} &&\dd{t} \nn
+%     \equiv& \sum_{pq} \int_{t_0}^{t_1} (\epsilon_{pq}   X_{qp} + \epsilon_{qp}^* X_{pq}^*)   \dd{t},
+% \end{alignat}
+% \begin{align}  \label{eq:P_space_variation_orthogonal}
+%     2 \delta \mathrm{Re}(\mathcal{S}) 
+%     &=
+%     \begin{multlined}[t]
+%           \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi}   - (i \dot{\rho}_{qp})   \Big) \dd{t} \\
+%         + \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}^* \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi}^* - (i \dot{\rho}_{qp})^* \Big) \dd{t}
+%     \end{multlined} \nn
+%     %%%
+%     &=
+%     \begin{multlined}[t]
+%         \sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \Big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi}   - (i \dot{\rho}_{qp})   \Big) \dd{t} \\
+%       + \sum_{pq} \int_{t_0}^{t_1} \epsilon_{qp}^* \Big( \elm{\tilde{\Psi}}{[iD - H, E_{qp}]}{\Psi}^* - (i \dot{\rho}_{pq})^* \Big) \dd{t}, 
+%   \end{multlined}
+% \end{align}
+% where we have simply renamed summation indices after the second equality.
+% Using $\epsilon_{qp}^* = - \epsilon_{pq}$ and collecting terms, we get
+% \begin{align}
+%     2 \delta \mathrm{Re}(\mathcal{S}) 
+%     = &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \big( \elm{\tilde{\Psi}}{[iD - H, E_{pq}]}{\Psi} - i \dot{\rho}_{qp} \big)       \dd{t} \nn
+%     - &\sum_{pq} \int_{t_0}^{t_1} \epsilon_{pq}   \big( \elm{\tilde{\Psi}}{[iD - H, E_{qp}]}{\Psi} - i \dot{\rho}_{pq} \big)^{\!*} \dd{t}, \nn
+% \end{align}
+
+
+% In contrast, the action is non-holomorphic in the orbitals, so we must consider both terms.
+% We note, however, that
+% \begin{align}
+%     \mathbf{z} = \{ \bm{\varphi}^*, \bm{\varphi} \} = \{ \bm{\varphi}^*, \bm{\varphi} \}^* = \mathbf{z}^*.
+% \end{align}
+% This implies
+% \begin{align}
+%     \delta_{\{ \bm{\varphi}^*, \bm{\varphi} \}} \mathrm{Re}(\mathcal{S}) 
+%     = \mathrm{Re}( \delta_{\{ \bm{\varphi}^*, \bm{\varphi} \}} (\mathcal{S})  )
+% \end{align}
+% or, more generally, that the variation and the complex conjugate commute if the
+% variation is performed with respect to some parameters and the complex conjugate parameters at the same time.
+% The steps needed for computing $\delta_{\{ \bm{\varphi}^*, \bm{\varphi} \}} (\mathcal{S})$ are identical
+% to the ones we used for $\delta_{\{ \tilde{\bm{\varphi}}, \bm{\varphi} \}} (\mathcal{S})$.
+
 
 % Second, we perform the
 % $Q$-space ket variations,
