@@ -100,14 +100,14 @@ they take the appearance
 \begin{subequations}
     \begin{align}
         i \ket{\phiketdot{p}} 
-        = i \sum_{q} \ket{\phiket{q}} \eta_{qp}
+        &= +i \sum_{q} \ket{\phiket{q}} \eta_{qp}
         + Q \Big[
         h \ket{\phiket{p}} + \sum_{oqrs} W_{rs} \ket{\phiket{q}} P_{qsor} \, (\mathbf{D}^{-1})_{op}
         \Big], \label{eq:phiket_dot} \\
         i \bra{\phibradot{p}} 
-        = -i \sum_{q} \eta_{pq} \bra{\phibra{q}} -
+        &= -i \sum_{q} \eta_{pq} \bra{\phibra{q}} -
         \Big[
-        \bra{\phibra{p}} h + \sum_{oqrs} (\mathbf{D}^{-1})_{po} \, P_{osqr}  \bra{\phibra{q}} W_{rs} 
+        \bra{\phibra{p}} h + \sum_{oqrs} (\mathbf{D}^{-1})_{po} \, P_{orqs}  \bra{\phibra{q}} W_{sr} 
         \Big] Q. \label{eq:phibra_dot}
     \end{align}
 \end{subequations}
@@ -136,7 +136,7 @@ In the orthogonal case, the densities are Hermitianized according to
 Having an orthogonal basis of course means $\bra{\phibra{p}} = \bra{\phiket{p}}$,
 which implies $Q = Q^{\dagger}$ and $W_{rs}^* = W_{sr}$. Using these relations
 and the Hermitianized densities one easily confirms that Eqs.~\eqref{eq:phiket_dot}
-and \eqref{eq:phibra_dot} are simply each other's adjoint,
+and \eqref{eq:phibra_dot} are simply each other's adjoint
 when the orbitals are orthogonal.
 
 We now introduce an underlying/primitive basis that is indexed by greek subscripts and assumed to be biorthonormal.
@@ -778,7 +778,7 @@ We start by varying a single bra orbital, i.e.
 \end{subequations}
 The densities and the functional $\mathcal{I}$ can be evaluated using the anti-commutation relations (or Wick's theorem), so they do not
 depend on the orbitals. The variation of the action thus reads
-\begin{align}
+\begin{align} \label{eq:Q_space_variation_bra}
     \delta S 
     &= 
     \begin{multlined}[t]
@@ -845,19 +845,29 @@ Taking the one-bode density to be invertible, we finally get
     i Q \ket{\phiketdot{p}}
     = 
     Q \bigg[ h \ket{\phiket{p}}
-    + \sum_{pqrs} W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q} \, (\bm{\rho}^{-1})_{\bar{p}p} \bigg],
+    + \sum_{\bar{p}qrs} W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q} \, (\bm{\rho}^{-1})_{\bar{p}p} \bigg],
 \end{align}
 which agrees with the $Q$-space term of Eq.~\eqref{eq:phiket_dot} after renaming summation indices.
 The $Q$-space term of Eq.~\eqref{eq:phibra_dot} is derived in a very similar manner by setting
 \begin{subequations}
     \begin{gather}
-        \ket{\phiketvar{\bar{r}}} = \ket{\omega_{\bar{r}}} = Q \ket{\omega_{\bar{r}}}, \\
-        \ket{\phiketvar{r}}  = 0, \quad r \neq \bar{r}.
+        \ket{\phiketvar{\bar{p}}} = \ket{\omega_{\bar{p}}} = Q \ket{\omega_{\bar{p}}}, \\
+        \ket{\phiketvar{p}}  = 0, \quad p \neq \bar{p}.
     \end{gather}
 \end{subequations}
 When doing the derivation, one needs to use integration by parts 
 to move the time derivative in Eq.~\eqref{eq:Lagrangian_for_Q_space_variation}
-to the bra side. Apart from this, the steps are almost identical.
+to the bra side. For later reference, the variation takes the form
+\begin{align} \label{eq:Q_space_variation_ket}
+    \delta S 
+    &=
+    -\int_{t_0}^{t_1}
+    \bigg[
+        \sum_{q} \big( i \braket{\phibradot{q} | \omega_{\bar{p}}} + \elm{\phibra{q}}{h}{\omega_{\bar{p}}}
+        \big) \rho_{\bar{p}q}
+        + \sum_{qrs} \elm{\phibra{r}}{ W_{sq} }{\omega_{\bar{p}}} \rho_{\bar{p}qrs}
+    \bigg] \dd{t}.
+\end{align}
 
 
 \subsection{Orthogonal case}
@@ -1031,6 +1041,80 @@ so that
         h_j - i \sum_{rs} A_{j(rs)} \eta_{rs}
     \Big).
 \end{align}
+
+For the $Q$-space equations we would like to compute 
+\begin{align}
+    \delta_{\bm{\varphi}^*} \mathrm{Re}(\mathcal{S}) 
+    = \tfrac{1}{2} (\delta_{\bm{\varphi}^*} \mathcal{S} + (\delta_{\bm{\varphi}} \mathcal{S})^*).
+\end{align}
+This can be done directly, but we can in fact reuse the derivations from the biorthogonal case
+by noting that $\delta_{\bm{\varphi}^*} \mathcal{S}$ is formally identical
+to Eq.~\eqref{eq:Q_space_variation_bra} (which we might write as $\delta_{\tilde{\bm{\varphi}}} \mathcal{S}$),
+while $\delta_{\bm{\varphi}} \mathcal{S}$ is formally identical to Eq.~\eqref{eq:Q_space_variation_ket}.
+The phrase `formally identical' simply means that all steps in the derivations are the same;
+the only difference is the absence of tildes on the bra orbitals and bra variations. 
+Rearranging slightly, we thus have
+\begin{subequations}
+    \begin{align}
+        \delta_{\bm{\varphi}^*} \mathcal{S} 
+        &=
+        +\int_{t_0}^{t_1}
+        \bra{\omega_{\bar{p}}} Q
+        \bigg[
+            \sum_{q} \big[ i \ket{\phiketdot{q}} - h \ket{\phiket{q}} \mspace{-2mu} \big] \rho_{q\bar{p}}
+            - \sum_{qrs} W_{qs} \ket{\phiket{r}} \rho_{rs\bar{p}q}
+        \bigg] \dd{t}, \\
+        \delta_{\bm{\varphi}} \mathcal{S}
+        &=
+        -\int_{t_0}^{t_1}
+        \bigg[
+            \sum_{q} \big[ i \bra{\phiketdot{q}} + \bra{\phiket{q}} h \, \big] \rho_{\bar{p}q}
+            + \sum_{qrs} \bra{\phiket{r}} W_{sq} \, \rho_{\bar{p}qrs}
+        \bigg] Q \ket{\omega_{\bar{p}}} \dd{t}
+    \end{align}
+\end{subequations}
+and
+\begin{align}
+    \delta_{\bm{\varphi}^*} \mathrm{Re}(\mathcal{S})
+    &= \tfrac{1}{2} (\delta_{\bm{\varphi}^*} \mathcal{S} + (\delta_{\bm{\varphi}} \mathcal{S})^*) \nn
+    &=
+    \frac{1}{2} \int_{t_0}^{t_1}
+        \bra{\omega_{\bar{p}}} Q
+        \bigg[
+            \sum_{q} \big[ i \ket{\phiketdot{q}} - h \ket{\phiket{q}} \mspace{-2mu} \big] ( \rho_{q\bar{p}} + \rho_{\bar{p}q}^* )
+            - \sum_{qrs} W_{qs} \ket{\phiket{r}} ( \rho_{rs\bar{p}q} + \rho_{\bar{p}qrs}^* )
+        \bigg] \dd{t} \nn
+    &\equiv
+    \int_{t_0}^{t_1}
+        \bra{\omega_{\bar{p}}} Q
+        \bigg[
+            \sum_{q} \big[ i \ket{\phiketdot{q}} - h \ket{\phiket{q}} \mspace{-2mu} \big] D_{q\bar{p}}
+            - \sum_{qrs} W_{qs} \ket{\phiket{r}} P_{rs\bar{p}q}
+        \bigg] \dd{t}
+\end{align}
+Since $\bra{\omega_{\bar{p}}} Q$ is arbitrary, $\delta_{\bm{\varphi}^*} \mathrm{Re}(\mathcal{S}) = 0$
+if and only if
+\begin{align}
+    \sum_{q} i Q \ket{\phiketdot{q}} D_{q\bar{p}} 
+    = Q \bigg[ \sum_{q} h \ket{\phiket{q}} D_{q\bar{p}}
+    + \sum_{qrs} W_{qs} \ket{\phiket{r}} P_{rs\bar{p}q} \bigg].
+\end{align}
+Taking $\mathbf{D}$ to be invertible, we obtain the final equations of motion:
+\begin{align}
+    i Q \ket{\phiketdot{p}}
+    = Q \bigg[ h \ket{\phiket{p}}
+    + \sum_{\bar{p}qrs} W_{qs} \ket{\phiket{r}} P_{rs\bar{p}q} \, (\mathbf{D}^{-1})_{\bar{p} p} \bigg].
+\end{align}
+
+% we start by varying a single bra orbital, i.e.
+% \begin{subequations}
+%     \begin{gather}
+%         \bra{\phiketvar{\bar{p}}} = \bra{\omega_{\bar{p}}} = \bra{\omega_{\bar{p}}} Q, \\
+%         \bra{\phiketvar{p}} = 0, \quad p \neq \bar{p}.
+%     \end{gather}
+% \end{subequations}
+
+
 
 
 
